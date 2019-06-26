@@ -4,7 +4,8 @@
   <a routerLink="/home" routerLinkActive="active" class="btn btn-success">My Profile</a>
   <a routerLink="/friends" routerLinkActive="active" class="btn btn-success">Friends</a>
   <a routerLink="/about" routerLinkActive="active" class="btn btn-success">Search</a>
-  <a routerLink="/login" routerLinkActive="active" class="btn btn-success">Login</a>
-  <a (click)="logout()" class="btn btn-success">Logout</a>
+  <a *ngIf="!authService.user" routerLink="/login" routerLinkActive="active" class="btn btn-success">Login</a>
+  <a *ngIf="authService.user" (click)="logout()" class="btn btn-success">Logout</a>
+  <span *ngIf="authService.user">Welcome user: {{authService.user.email}}</span>
 </nav>
 <router-outlet></router-outlet>
