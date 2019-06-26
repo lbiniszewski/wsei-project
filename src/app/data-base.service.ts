@@ -5,7 +5,7 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class DataBaseService {
 
-  FriendS = [
+  Friends = [
     new Friend('1', 'Pawel Malinowski', 'Uruchamia informacje o użytkowniku'),
     new Friend('2', 'Edyta Oziemska', 'Uruchamia informacje o użytkowniku'),
     new Friend('3', 'Ryszard Skoneczny', 'Uruchamia informacje o użytkowniku'),
@@ -13,16 +13,16 @@ export class DataBaseService {
   ];
 
   getFriends(): Observable<Array<Friend>> {
-    return Observable.of(this.FriendS);
+    return Observable.of(this.Friends);
   }
 
   getFriendById(id: string): Friend {
-    return this.FriendS.find(e => e.id === id);
+    return this.Friends.find(e => e.id === id);
   }
 
-  getRandomCoruse() {
+  getRandomFriend() {
     const n = Math.floor(Math.random() * 3);
-    return this.FriendS[n];
+    return this.Friends[n];
   }
 
 }

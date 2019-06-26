@@ -14,10 +14,10 @@ export class HomeComponent implements OnInit {
   constructor(private dbService: DataBaseService, private router: Router) { }
 
   ngOnInit() {
-    this.friend = this.dbService.getRandomCoruse();
+    this.friend = this.dbService.getRandomFriend();
   }
 
-  getfriend() {
+  getFriend() {
     this.router.navigate(['/friends', this.friend.id]);
   }
 
