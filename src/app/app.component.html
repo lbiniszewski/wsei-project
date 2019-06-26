@@ -1,0 +1,10 @@
+<h1>WEB Portfolio</h1>
+
+<nav>
+  <a routerLink="/home" routerLinkActive="active" class="btn btn-success">My Profile</a>
+  <a routerLink="/friends" routerLinkActive="active" class="btn btn-success">Friends</a>
+  <a routerLink="/about" routerLinkActive="active" class="btn btn-success">Search</a>
+  <a routerLink="/login" routerLinkActive="active" class="btn btn-success">Login</a>
+  <a (click)="logout()" class="btn btn-success">Logout</a>
+</nav>
+<router-outlet></router-outlet>
