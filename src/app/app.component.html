@@ -1,10 +1,31 @@
-<h1>WEB Portfolio</h1>
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark green justify-content-between" [containerInside]="false">
 
-<nav>
-  <a routerLink="/home" routerLinkActive="active" class="btn btn-success">My Profile</a>
-  <a routerLink="/friends" routerLinkActive="active" class="btn btn-success">Friends</a>
-  <a routerLink="/about" routerLinkActive="active" class="btn btn-success">Search</a>
-  <a routerLink="/login" routerLinkActive="active" class="btn btn-success">Login</a>
-  <a (click)="logout()" class="btn btn-success">Logout</a>
-</nav>
+  <mdb-navbar-brand>
+    <a class="navbar-brand" href="#">
+      <img src="" height="40" alt="LOGO">
+      WEB Porfolio
+  </a>
+  </mdb-navbar-brand>
+
+  <app-app-search></app-app-search>
+
+  <links>
+
+    <div class="navbar-nav ml-auto">
+      <a routerLink="/friends" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>Znajomi</a>
+
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>Moje konto<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+          <a routerLink="/home" routerLinkActive="active" class="dropdown-item waves-light" mdbWavesEffect href="#">Mój profil</a>
+          <a (click)="logout()" class="dropdown-item waves-light" mdbWavesEffect href="#">Wyloguj</a>
+        </div>
+      </li>
+
+    </div>
+    
+  </links>
+
+
+</mdb-navbar>
 <router-outlet></router-outlet>

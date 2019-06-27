@@ -16,6 +16,11 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthService } from './auth/auth.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { NavbarModule, WavesModule, ButtonsModule, InputsModule } from 'angular-bootstrap-md';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { AppSearchComponent } from './search/app-search.component';
+
 
 
 const firebaseConfig = {
@@ -43,7 +48,8 @@ const firebaseConfig = {
     FriendsListComponent,
     TemplateDrivenFormComponent,
     ReactiveFormComponent,
-    LoginComponent
+    LoginComponent,
+    AppSearchComponent,
   ],
   imports: [
     BrowserModule, 
@@ -51,8 +57,13 @@ const firebaseConfig = {
     FormsModule, 
     ReactiveFormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    NavbarModule,
+    WavesModule,
+    ButtonsModule,
+    MDBBootstrapModule.forRoot()
   ],
+  schemas: [ NO_ERRORS_SCHEMA ],
   providers: [DataBaseService, AuthService],
   bootstrap: [AppComponent]
 })
