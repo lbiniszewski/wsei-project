@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1>WEB Portfolio</h1>
 
 <nav>
@@ -8,4 +9,37 @@
   <a *ngIf="authService.user" (click)="logout()" class="btn btn-success">Logout</a>
   <span *ngIf="authService.user">Welcome user: {{authService.user.email}}</span>
 </nav>
+=======
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark green justify-content-between" [containerInside]="false">
+
+  <mdb-navbar-brand>
+    <a class="navbar-brand" href="#">
+      <img src="" height="40" alt="LOGO">
+      WEB Porfolio
+  </a>
+  </mdb-navbar-brand>
+
+  <app-app-search></app-app-search>
+
+  <links>
+
+    <div class="navbar-nav ml-auto">
+      <a routerLink="/friends" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>Znajomi</a>
+
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>Moje konto<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+          <a routerLink="/home" routerLinkActive="active" class="dropdown-item waves-light" mdbWavesEffect href="#">Mój profil</a>
+          <a (click)="logout()" class="dropdown-item waves-light" mdbWavesEffect href="#">Wyloguj</a>
+        </div>
+      </li>
+
+    </div>
+    
+  </links>
+
+
+</mdb-navbar>
+<app-readonlyprofile></app-readonlyprofile>
+>>>>>>> de7407da1471a971d1658db28ff2b328d6a2fa47
 <router-outlet></router-outlet>
