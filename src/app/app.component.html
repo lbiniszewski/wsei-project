@@ -1,16 +1,16 @@
 <<<<<<< HEAD
-<h1>WEB Portfolio</h1>
 
-<nav>
-  <a *ngIf="authService.user" routerLink="/home" routerLinkActive="active" class="btn btn-success">My Profile</a>
-  <a *ngIf="authService.user" routerLink="/friends" routerLinkActive="active" class="btn btn-success">Friends</a>
-  <a *ngIf="authService.user" routerLink="/about" routerLinkActive="active" class="btn btn-success">Search</a>
-  <a *ngIf="!authService.user" routerLink="/login" routerLinkActive="active" class="btn btn-success">Login</a>
-  <a *ngIf="authService.user" (click)="logout()" class="btn btn-success">Logout</a>
-  <span *ngIf="authService.user">Welcome user: {{authService.user.email}}</span>
-</nav>
 =======
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark green justify-content-between" [containerInside]="false">
+
+  <nav>
+    <a *ngIf="authService.user" routerLink="/home" routerLinkActive="active" class="btn btn-info">My Profile</a>
+    <a *ngIf="authService.user" routerLink="/friends" routerLinkActive="active" class="btn btn-info">Friends</a>
+    <a *ngIf="authService.user" routerLink="/about" routerLinkActive="active" class="btn btn-info">Search</a>
+    <a *ngIf="!authService.user" routerLink="/login" routerLinkActive="active" class="btn btn-info">Login</a>
+    <a *ngIf="authService.user" (click)="logout()" class="btn btn-info">Logout</a>
+    <span *ngIf="authService.user">Welcome user: {{authService.user.email}}</span>
+  </nav>
 
   <mdb-navbar-brand>
     <a class="navbar-brand" href="#">
@@ -40,6 +40,6 @@
 
 
 </mdb-navbar>
-<app-readonlyprofile></app-readonlyprofile>
+
 >>>>>>> de7407da1471a971d1658db28ff2b328d6a2fa47
 <router-outlet></router-outlet>
