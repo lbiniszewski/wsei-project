@@ -31,6 +31,11 @@ import { EditProfileEngineComponent } from './profile/edit-profile/edit-profile-
 import { TextFieldComponent } from './profile/edit-profile/text-field/text-field.component';
 import { AddButtonComponent } from './profile/edit-profile/add-button/add-button.component';
 import { CancleButtonComponent } from './profile/edit-profile/cancle-button/cancle-button.component';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import * as rxjs from 'rxjs';
+import { HttpClientModule } from "@angular/common/http";
+
 
 
 const firebaseConfig = {
@@ -82,7 +87,10 @@ const firebaseConfig = {
     NavbarModule,
     WavesModule,
     ButtonsModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
+    HttpClientModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [DataBaseService, AuthService],
