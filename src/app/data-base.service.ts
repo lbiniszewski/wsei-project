@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { User } from './user.model'
+import { User, Opinion } from './user.model'
 import { AngularFireObject, AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class DataBaseService {
@@ -28,35 +28,69 @@ export class DataBaseService {
     const n = Math.floor(Math.random() * 3);
     return this.FriendS[n];
   }
-  userDataList: User[];
-  private userData= new Subject<User>();
-  getUserData(){
-    let userRef = this.database.collection('users').doc('whjbKVHSLiarH2YYhv6ktntpcS72');
-      let getData = userRef.get().toPromise().then(doc=>{
-      const actualUser = new User();
-      actualUser.$key = doc.id
-      actualUser.name = doc.data().userName
-      actualUser.surname = doc.data().surname
-      actualUser.aboutMe = doc.data().aboutMe
-      // this.userDataList.push(actualUser)
-       this.userData.next({$key:doc.id,
-      name:doc.data().userName,
-       surname:doc.data().surname,
-       aboutMe:doc.data().aboutMe
-       })
-      
-        console.log(doc.data())
-        console.log(this.userData)
+  private userKey: string = 'oZbVhmP51LWibJ9qgbGcGugIBSX2';
+  private userData = new Subject<User>();
+  private userOpinionData = new Subject<Opinion>();
+  private userDataWhichGaveOpinion = new Subject<User>();
+  private userOpinionKey = 'whjbKVHSLiarH2YYhv6ktntpcS72';
+  getUserData(key:string) {
+    let userRef = this.database
+      .collection('users')
+      .doc(`${key}`);
+    userRef.get().toPromise().then(doc => {
+      this.userData.next({
+        $key: doc.id,
+        name: doc.data().userName,
+        surname: doc.data().surname,
+        aboutMe: doc.data().aboutMe,
       })
+    })
   }
-  sendData():Observable<any>{
+  getUserDataWhichGaveOpinion(key:string) {
+    console.log(key,typeof key)
+    let userRef = this.database
+      .collection('users')
+      .doc(`${key}`);
+    userRef.get().toPromise().then(doc => {
+      console.log(doc.data())
+      this.userDataWhichGaveOpinion.next({
+        $key: doc.id,
+        name: doc.data().userName,
+        surname: doc.data().surname,
+        aboutMe: doc.data().aboutMe,
+      })
+    })
+  }
+  getUserOpinionData(){
+      let  opinionRef= this.database.collection('users')
+      .doc('oZbVhmP51LWibJ9qgbGcGugIBSX2')
+      .collection('opinionAboutUser')
+      .doc('whjbKVHSLiarH2YYhv6ktntpcS72');
+      opinionRef.get().toPromise().then(doc => {
+       this.userOpinionData.next({
+         $opinionKey: doc.id,
+         opinionAboutUser: doc.data().opinion
+       })
+       this.userOpinionKey = doc.id
+       console.log(this.userOpinionKey)
+    })
+    
+  }
+  sendUserData(): Observable<any> {
     return this.userData.asObservable();
   }
-  constructor(public database:AngularFirestore) {
-    this.getUserData()
-    console.log(this.userData)
+  sendUserOpinionData():Observable<any> {
+    return this.userOpinionData.asObservable();
   }
-  
+  sendUserWhichGaveOpinion():Observable<any>{
+    return this.userDataWhichGaveOpinion.asObservable();
+  }
+  constructor(public database: AngularFirestore) {
+    this.getUserData(this.userKey);
+    this.getUserOpinionData()
+    this.getUserDataWhichGaveOpinion(this.userOpinionKey)
+  }
+
 }
 
 export class Friend {

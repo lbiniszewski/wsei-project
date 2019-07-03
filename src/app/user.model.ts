@@ -1,6 +1,10 @@
 export class User{
     $key:string;
-    name:string;
-    surname:string;
-    aboutMe:String;
+    name:any;
+    surname:any;
+    aboutMe:any;
+}
+export class Opinion{
+ $opinionKey:any;
+ opinionAboutUser:any;
 }

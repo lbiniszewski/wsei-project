@@ -21,9 +21,9 @@ export class ShowNameComponent implements OnInit {
   data:any = {};
   subscription: Subscription;
   constructor(private dbService: DataBaseService) {
-    this.subscription = this.dbService.sendData().subscribe(data =>{
+    this.subscription = this.dbService.sendUserData().subscribe(data =>{
       this.data = data
-      console.log(data)
+      
     })
     
   }
