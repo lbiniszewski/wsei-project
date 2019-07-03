@@ -17,7 +17,7 @@ export class ShowOpinionComponent implements OnInit {
     
     this.subOpinionData();
     this.subUserOpinionName();
-    this.key = this.opinionData.$key
+    
     
     
   }
