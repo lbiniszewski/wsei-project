@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show-tematical-module.component.scss']
 })
 export class ShowTematicalModuleComponent implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit() {

@@ -12,22 +12,59 @@ justify-content: space-between;
 padding-bottom:10px;
 }
 .addOpinionBtn{
-
+width:30px;
+height: 30px;
+background: #dfe5e8;
+background-size: 30px 30px;
+background-image: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjQ0OHB0IiB2aWV3Qm94PSIwIDAgNDQ4IDQ0OCIgd2lkdGg9IjQ0OHB0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im00MDggMTg0aC0xMzZjLTQuNDE3OTY5IDAtOC0zLjU4MjAzMS04LTh2LTEzNmMwLTIyLjA4OTg0NC0xNy45MTAxNTYtNDAtNDAtNDBzLTQwIDE3LjkxMDE1Ni00MCA0MHYxMzZjMCA0LjQxNzk2OS0zLjU4MjAzMSA4LTggOGgtMTM2Yy0yMi4wODk4NDQgMC00MCAxNy45MTAxNTYtNDAgNDBzMTcuOTEwMTU2IDQwIDQwIDQwaDEzNmM0LjQxNzk2OSAwIDggMy41ODIwMzEgOCA4djEzNmMwIDIyLjA4OTg0NCAxNy45MTAxNTYgNDAgNDAgNDBzNDAtMTcuOTEwMTU2IDQwLTQwdi0xMzZjMC00LjQxNzk2OSAzLjU4MjAzMS04IDgtOGgxMzZjMjIuMDg5ODQ0IDAgNDAtMTcuOTEwMTU2IDQwLTQwcy0xNy45MTAxNTYtNDAtNDAtNDB6bTAgMCIvPjwvc3ZnPg==);
+border:none;
 }
 .loadedOpinion{
 display:flex;
 flex-direction: column;
 text-align: left;
+div{
+    display: flex;
+    flex-direction: row;
+
+
+    img{
+        margin-right:8px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
 }
+}
+
+
+
 h2{
     font-size:16px;
     display: inline-block;
 }
-h3{
-    font-size:13px;
-
-}
 .opinionContent{
 font-size:12px;
 word-wrap: break-word;
+}
+.addNewOpinionPopUp{
+    background: rgba(0, 0, 0, 0.7);
+    display:none;
+    color:white;
+    position: fixed;
+    z-index:100;
+    width:100%;
+    height: 100%;
+    top:0;
+    left:0;
+}
+.formContainer{
+    width:66%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:10%;
+}
+.sendBtn{
+    float: right;
 }

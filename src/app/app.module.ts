@@ -35,7 +35,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import * as rxjs from 'rxjs';
 import { HttpClientModule } from "@angular/common/http";
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 const firebaseConfig = {
@@ -90,7 +90,8 @@ const firebaseConfig = {
     MDBBootstrapModule.forRoot(),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
-    HttpClientModule
+    HttpClientModule,
+    ImageCropperModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [DataBaseService, AuthService],

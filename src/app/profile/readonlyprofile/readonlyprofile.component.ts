@@ -34,7 +34,7 @@ import { UserComponent } from '../user.component';
 export class ReadonlyprofileComponent implements OnInit {
 
   constructor() { }
-
+  
   ngOnInit() {
   }
 

@@ -1,7 +1,8 @@
-import { Component, OnInit, NgModule, OnDestroy } from '@angular/core';
+import { Component, OnInit, NgModule, OnDestroy, Output,EventEmitter } from '@angular/core';
 import { DataBaseService } from 'src/app/data-base.service';
 import {User} from 'src/app/user.model'
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
+
 
 
 @Component({
@@ -18,6 +19,10 @@ import { Subscription } from 'rxjs';
   ]
 })
 export class ShowNameComponent implements OnInit {
+  
+  public buttonClickEventTrack = new Subject();
+  click:boolean = true;
+  editBtn:any
   data:any = {};
   subscription: Subscription;
   constructor(private dbService: DataBaseService) {
@@ -25,10 +30,22 @@ export class ShowNameComponent implements OnInit {
       this.data = data
       
     })
+  }
+  btnClicked(){
+    this.dbService.buttonClickTrack.next(this.click)
+    console.log(this.click)
+    this.editBtn = document.querySelector('#editBtn')
+    if(this.click ===true&&this.editBtn.innerHTML =="Edytuj"){
+      this.editBtn.innerHTML = 'Zapisz'
+      this.click = false;
+    }else{
+      this.editBtn.innerHTML = 'Edytuj'
+      this.click=true;
+    }
     
   }
+
   ngOnInit() {
-    
     
   }
   
