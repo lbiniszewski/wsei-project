@@ -9,11 +9,14 @@ import { AppSearchComponent } from 'src/app/search/app-search.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  
 
+  
   constructor(public authService: AuthService, private router:Router){
 
   }
 
+  
 
   logout(){
     this.authService.logout();
