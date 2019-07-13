@@ -1,12 +1,21 @@
+
 <form (ngSubmit)="login(formData)" #formData = "ngForm">
-  <div style="display: inline-grid; margin: 10px">
-    <label>E-mail</label>
-    <input ngModel type="email" name="email" required>
-
-    <label>Hasło</label>
-    <input ngModel type="password" name="password" required>
-
-    <button type="submit" [disabled] = "formData.invalid">Zaloguj</button>
-    <button type="button" [disabled] = "formData.invalid" (click)="signup(formData)">Rejestracja</button>
+<div class="container">
+  <div class="input-group mb-3 mt-3">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    <!--<label>E-mail</label>-->
+    <input ngModel class="form-control p-3" type="email" name="email" placeholder="Email" required>
   </div>
+  <div class="input-group mb-3 mt-3"> 
+    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    <!--<label>Hasło</label>-->
+    <input ngModel class="form-control p-3" type="password" name="password" placeholder="Password" required>
+  </div>
+  <div class="btn-group btn-group-lg">
+    <button type="submit" class="btn btn-info mr-3" [disabled] = "formData.invalid">Login</button>
+    <button type="button" class="btn btn-info" [disabled] = "formData.invalid" (click)="signup(formData)">Register</button>
+  </div>
+</div>
 </form>
+
+

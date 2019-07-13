@@ -1,12 +1,41 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { User, Opinion } from './user.model'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject, BehaviorSubject } from 'rxjs';
 
+
+
+import 'firebase/firestore';
+import { AuthService } from './auth/auth.service';
+import * as firebase from 'firebase';
+
+
+
+
+
+firebase.initializeApp({
+  apiKey: "AIzaSyAdjxXGTP8DeaHj7We_qGBZeyr3PLZOd3U",
+  authDomain: "web-portfolio-513ae.firebaseapp.com",
+  projectId: "web-portfolio-513ae"
+});
+
+
+
+
+
+
+
 @Injectable()
 export class DataBaseService {
+
+  Friends = [
+    new Friend('1', 'Wyswietlanie informacji o uzytkowniku', 'Kowalski', 'Stefan', 'ciag znakow do fotografi'),
+    new Friend('2', 'Wyswietlanie informacji o uzytkowniku', 'Buga', 'Malwina', 'ciag znakow do fotografi'),
+    new Friend('3', 'Wyswietlanie informacji o uzytkowniku', 'Nowak', 'Jan', 'ciag znakow do fotografi'),
+    new Friend('4', 'Wyswietlanie informacji o uzytkowniku', 'Wojciechowska', 'Katarzyna', 'ciag znakow do fotografi'),
   FriendS = [
     new Friend('1', 'Pawel Malinowski', 'Uruchamia informacje o użytkowniku'),
     new Friend('2', 'Edyta Oziemska', 'Uruchamia informacje o użytkowniku'),
@@ -14,17 +43,22 @@ export class DataBaseService {
     new Friend('4', 'Malwina Buga', 'Uruchamia informacje o użytkowniku')
   ];
 
+
+
+
+
+
   getFriends(): Observable<Array<Friend>> {
-    return Observable.of(this.FriendS);
+    return Observable.of(this.Friends);
   }
 
   getFriendById(id: string): Friend {
-    return this.FriendS.find(e => e.id === id);
+    return this.Friends.find(e => e.id === id);
   }
 
-  getRandomCoruse() {
+  getRandomFriend() {
     const n = Math.floor(Math.random() * 3);
-    return this.FriendS[n];
+    return this.Friends[n];
   }
   public actualUserKey: string = 'oZbVhmP51LWibJ9qgbGcGugIBSX2';
   private userData = new Subject<User>();
@@ -112,5 +146,5 @@ export class DataBaseService {
 }
 
 export class Friend {
-  constructor(public id: string, public title: string, public content: string) { }
+  constructor( public id: string, public aboutMe: string, public surname: string, public userName: string, public userPhoto: string) { }
 }

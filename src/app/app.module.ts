@@ -14,8 +14,12 @@ import { TemplateDrivenFormComponent } from './about/template-driven-form/templa
 import { ReactiveFormComponent } from './about/reactive-form/reactive-form.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthService } from './auth/auth.service';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+
 import { NavbarModule, WavesModule, ButtonsModule, InputsModule } from 'angular-bootstrap-md';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -36,6 +40,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import * as rxjs from 'rxjs';
 import { HttpClientModule } from "@angular/common/http";
 import { ImageCropperModule } from 'ngx-image-cropper';
+
+
+
 
 
 const firebaseConfig = {
@@ -75,7 +82,7 @@ const firebaseConfig = {
     EditProfileEngineComponent,
     TextFieldComponent,
     AddButtonComponent,
-    CancleButtonComponent
+    CancleButtonComponent,
   ],
   imports: [
     BrowserModule, 
@@ -84,6 +91,8 @@ const firebaseConfig = {
     ReactiveFormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
     NavbarModule,
     WavesModule,
     ButtonsModule,
@@ -97,4 +106,7 @@ const firebaseConfig = {
   providers: [DataBaseService, AuthService],
   bootstrap: [AppComponent]
 })
+
+
+
 export class AppModule {}
