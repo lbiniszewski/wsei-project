@@ -58,6 +58,7 @@ export class DataBaseService {
           aboutMe: doc.data().aboutMe,
           photo: doc.data().userPhoto
         })
+        console.log(doc.data())
       })
   }
   getUserOpinionData() {
@@ -83,7 +84,7 @@ export class DataBaseService {
   sendUserWhichGaveOpinion(): Observable<any> {
     return this.userDataWhichGaveOpinion.asObservable();
   }
-  sendUserArray(): Observable<any> {
+  sendUserArray(): Observable<any[]> {
     
     return this.arrayOfUserOpinion.asObservable()
   }

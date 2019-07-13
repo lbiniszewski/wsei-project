@@ -29,12 +29,11 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
     this.subscription = this.dbService.sendUserData().subscribe(data => {
       this.userData = data
       this.makeSafeUrl()
-      console.log(this.safeImage)
-      console.log(this.userData)
+      
     })
     this.dbService.buttonClickTrack.subscribe(event => {
       this.clicked = event
-      console.log(this.clicked)
+      
       this.writingInTextArea()
     })
   }
@@ -51,12 +50,12 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
       this.updateDataBase();
       this.getPhotoAddBtn.style.display = "none";
       this.getTextArea.setAttribute("readonly", "");
-      console.log(this.base64textString)
+      
 
     }
   }
   updateDataBase() {
-    console.log(this.getTextArea.value)
+    
     if (this.userData.photo == "" || this.userData.photo != this.base64textString.toString() && this.base64textString.toString() != "") {
       this.dbService.database.collection('users')
         .doc('oZbVhmP51LWibJ9qgbGcGugIBSX2').update({
@@ -91,9 +90,6 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
 imageCropped(event: ImageCroppedEvent) {
   this.croppedImage = event.base64;
   this.base64textString = this.croppedImage
-  console.log(event);
-  console.log(typeof this.croppedImage)
-  console.log(typeof this.base64textString)
 }
 imageLoaded() {
   this.getImgCropper = document.querySelector('.imgCropperPopUp')
@@ -110,8 +106,6 @@ loadImageFailed () {
 }
 savePhoto(){
   this.getImgCropper.style.display = "none"
-  console.log(this.croppedImage)
-  console.log(this.base64textString)
 }
   ngOnInit() {
   }

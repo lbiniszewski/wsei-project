@@ -16,7 +16,7 @@
     <div class="loadedOpinion" *ngFor="let user of userArray">
         <div>
             <img [src]="safeImage">
-            <h3>{{userOpinionData.name}} {{userOpinionData.surname}}</h3>
+            <h3>{{userOpinionData.name}} {{userOpinionData.surname}} {{user.name}}</h3>
         </div>
         <p class="opinionContent">
             {{opinionData.opinionAboutUser}}
