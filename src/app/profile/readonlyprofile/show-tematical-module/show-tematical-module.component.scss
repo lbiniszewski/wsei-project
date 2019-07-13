@@ -9,7 +9,10 @@
 {
     display: flex;
     flex-direction: row;
-    img{
-        padding-right:20px;
+    justify-content: space-between;
+    .addBtn
+    {
+        display:block;
     }
+    
 }

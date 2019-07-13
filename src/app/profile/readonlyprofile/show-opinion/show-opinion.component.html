@@ -1,15 +1,25 @@
 <div class="mainContainer">
     <div class="titleContainer">
-    <h2>Opinie innych użytkowników</h2>
-    <div class="addOpinionBtn">
-        <img src="/wsei-project/social-app/src/assets/cross.jpg">
-    </div>
-</div>
+        <h2>Opinie innych użytkowników</h2>
+        <button class="addOpinionBtn" (click)="addNewOpinion()">
+        </button>
 
-<div class="loadedOpinion">
-<h3>Imię i nazwisko</h3>
-<p class="opinionContent">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel libero id ipsum gravida sagittis non ac ante. Fusce vulputate eget ex quis commodo. Phasellus eget feugiat nunc. Quisque vel euismod nisi, at malesuada neque. Integer in elit semper
-</p>
-</div>
+    </div>
+    <div class="addNewOpinionPopUp">
+        <div class="form-group formContainer">
+            <label for="exampleFormControlTextarea3">Napisz coś miłego:)</label>
+            <textarea type="text" class="form-control textAreaOpinionValue" id="exampleFormControlTextarea3"
+                rows="7"></textarea>
+            <button type="button" class="btn btn-primary btn-sm sendBtn" (click)="sendDataToDataBase()">Wyślij</button>
+        </div>
+    </div>
+    <div class="loadedOpinion" *ngFor="let user of userArray">
+        <div>
+            <img [src]="safeImage">
+            <h3>{{userOpinionData.name}} {{userOpinionData.surname}}</h3>
+        </div>
+        <p class="opinionContent">
+            {{opinionData.opinionAboutUser}}
+        </p>
+    </div>
 </div>
