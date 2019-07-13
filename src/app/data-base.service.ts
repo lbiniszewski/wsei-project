@@ -7,11 +7,10 @@ import 'rxjs/add/observable/of';
 
 import 'firebase/firestore';
 import { AuthService } from './auth/auth.service';
+import * as firebase from 'firebase';
 
 
-const firebase = require("firebase");
-// Required for side-effects
-require("firebase/firestore");
+
 
 
 firebase.initializeApp({
