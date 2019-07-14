@@ -1,3 +1,39 @@
-<p>
-  edit-profile works!
-</p>
+<!--Dodanie formularza w uproszczonej formie, postrona jaka otworzy sie 
+  w przypadku klikniecia w przycisk edytuj
+Jest to formularz plus dwie funkcje, jedna z nich przesyla dane do bazy 
+addData natomiast druga anuluje wpis cancelInput
+Po uzyciu ktorej kolwiek z nich na koncu nastepuje poprzez navigate i routing
+przekierowanie do podstrony home.
+
+-->
+<p> Ponizej pola definiowane do dodania do bazy </p>
+
+
+<form (ngSubmit)="addData(formData)" #formData = "ngForm">
+    <div class="container">
+      <div class="input-group mb-3 mt-3">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <!--<label>E-mail</label>-->
+        <input ngModel class="form-control p-3" type="text" name="userName" placeholder="Imie" required>
+      </div>
+      <div class="input-group mb-3 mt-3"> 
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <!--<label>Hasło</label>-->
+        <input ngModel class="form-control p-3" type="text" name="surname" placeholder="Nazwisko" required>
+      </div>
+      <div class="input-group mb-3 mt-3"> 
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <!--<label>Hasło</label>-->
+        <input ngModel class="form-control p-3" type="text" name="aboutMe" placeholder="Opis" required>
+      </div>
+        <div class="input-group mb-3 mt-3"> 
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <!--<label>Hasło</label>-->
+        <input ngModel class="form-control p-3" type="text" name="userPhoto" placeholder="definiowanie fotografii" required>
+        </div>
+      <div class="btn-group btn-group-lg">
+        <button type="submit" class="btn btn-info mr-3" [disabled] = "formData.invalid">Dodaj do bazy</button>
+        <button type="button" class="btn btn-info" (click)="cancelInput(formData)">Anuluj wpis</button>
+      </div>
+    </div>
+    </form>

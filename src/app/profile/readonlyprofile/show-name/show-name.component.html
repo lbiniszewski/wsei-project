@@ -3,4 +3,14 @@
     {{data.name}} {{data.surname}}
   </h1>
   <button type="button" class="btn btn-primary btn-sm editBtn" id="editBtn"(click)="btnClicked();">Edytuj</button>
+
+  <!--Dodanie przycisku oraz odniesienia do funkcji, przycisk wyzej zostawilem 
+  moze jest gdzies uzyty
+  -->
+  <button (click)="editProfile()" type="button" class="btn btn-primary btn-sm editBtn">
+    
+    Edytuj z Routingiem
+ 
+  </button>
+
   </div>
