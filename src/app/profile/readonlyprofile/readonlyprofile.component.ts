@@ -7,6 +7,7 @@ import { ShowProfileEngineComponent } from './show-profile-engine/show-profile-e
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { UserComponent } from '../user.component';
+import { DataBaseService } from 'src/app/data-base.service';
 
 @Component({
   selector: 'app-readonlyprofile',
@@ -33,9 +34,11 @@ import { UserComponent } from '../user.component';
 })
 export class ReadonlyprofileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dbService:DataBaseService) { }
   
   ngOnInit() {
+    this.dbService.getUserData(this.dbService.actualUserKey);
+    this.dbService.getUserOpinionData(this.dbService.actualUserKey)
   }
 
 }

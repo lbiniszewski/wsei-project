@@ -5,28 +5,15 @@ import 'rxjs/add/observable/of';
 import { User, Opinion } from './user.model'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject, BehaviorSubject } from 'rxjs';
-
-
-
 import 'firebase/firestore';
 import { AuthService } from './auth/auth.service';
 import * as firebase from 'firebase';
-
-
-
-
 
 firebase.initializeApp({
   apiKey: "AIzaSyAdjxXGTP8DeaHj7We_qGBZeyr3PLZOd3U",
   authDomain: "web-portfolio-513ae.firebaseapp.com",
   projectId: "web-portfolio-513ae"
 });
-
-
-
-
-
-
 
 @Injectable()
 export class DataBaseService {
@@ -36,12 +23,13 @@ export class DataBaseService {
     new Friend('2', 'Wyswietlanie informacji o uzytkowniku', 'Buga', 'Malwina', 'ciag znakow do fotografi'),
     new Friend('3', 'Wyswietlanie informacji o uzytkowniku', 'Nowak', 'Jan', 'ciag znakow do fotografi'),
     new Friend('4', 'Wyswietlanie informacji o uzytkowniku', 'Wojciechowska', 'Katarzyna', 'ciag znakow do fotografi'),
-  FriendS = [
-    new Friend('1', 'Pawel Malinowski', 'Uruchamia informacje o użytkowniku'),
-    new Friend('2', 'Edyta Oziemska', 'Uruchamia informacje o użytkowniku'),
-    new Friend('3', 'Ryszard Skoneczny', 'Uruchamia informacje o użytkowniku'),
-    new Friend('4', 'Malwina Buga', 'Uruchamia informacje o użytkowniku')
-  ];
+  ]
+   FriendS = [
+     new Friend('1','','Pawel','Malinowski', 'Uruchamia informacje o użytkowniku'),
+     new Friend('2','','Edyta','Oziemska', 'Uruchamia informacje o użytkowniku'),
+     new Friend('3','','Ryszard','Skoneczny', 'Uruchamia informacje o użytkowniku'),
+     new Friend('4','','Malwina','Buga', 'Uruchamia informacje o użytkowniku'),
+   ];
 
 
 
@@ -60,7 +48,7 @@ export class DataBaseService {
     const n = Math.floor(Math.random() * 3);
     return this.Friends[n];
   }
-  public actualUserKey: string = 'oZbVhmP51LWibJ9qgbGcGugIBSX2';
+  public actualUserKey: string = window.localStorage.getItem('actualUserID')
   private userData = new Subject<User>();
   private userOpinionData = new Subject<Opinion>();
   private userDataWhichGaveOpinion = new Subject<User>();
@@ -80,6 +68,7 @@ export class DataBaseService {
           photo: doc.data().userPhoto
         })
       })
+      this.getUserOpinionData(this.actualUserKey)
   }
   getUserDataWhichGaveOpinion(key: string) {
     this.database
@@ -95,11 +84,11 @@ export class DataBaseService {
         console.log(doc.data())
       })
   }
-  getUserOpinionData() {
+  getUserOpinionData(key:string) {
     this.database.collection('users')
-      .doc('oZbVhmP51LWibJ9qgbGcGugIBSX2')
+      .doc(key)
       .collection('opinionAboutUser')
-      .doc('whjbKVHSLiarH2YYhv6ktntpcS72')
+      .doc('SRImNX5L3DTktcOvPoe8F0vSpQl1')
       .get().toPromise().then(doc => {
         this.userOpinionData.next({
           $opinionKey: doc.id,
@@ -137,8 +126,10 @@ export class DataBaseService {
       
   }
   constructor(public database: AngularFirestore) {
+    
+    console.log(this.actualUserKey)
     this.getUserData(this.actualUserKey);
-    this.getUserOpinionData()
+    this.getUserOpinionData(this.actualUserKey)
     // this.getUserDataWhichGaveOpinion(this.userOpinionKey)
     this.arrayOfUserWhichGaveOpinion()
   }

@@ -36,7 +36,7 @@ import { TextFieldComponent } from './profile/edit-profile/text-field/text-field
 import { AddButtonComponent } from './profile/edit-profile/add-button/add-button.component';
 import { CancleButtonComponent } from './profile/edit-profile/cancle-button/cancle-button.component';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import * as rxjs from 'rxjs';
 import { HttpClientModule } from "@angular/common/http";
 import { ImageCropperModule } from 'ngx-image-cropper';

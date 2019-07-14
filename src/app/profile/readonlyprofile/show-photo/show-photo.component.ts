@@ -1,40 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
-import { DataBaseService } from 'src/app/data-base.service';
-import * as firebase from 'firebase';
 
-import { Component, OnInit, AfterContentChecked, ɵConsole } from '@angular/core';
+
+import { Component, OnInit, AfterContentChecked} from '@angular/core';
 import { DataBaseService } from 'src/app/data-base.service';
-import { User } from 'src/app/user.model'
+
 import { Subscription } from 'rxjs';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { ImageCropperComponent } from 'ngx-image-cropper';
+
 @Component({
   selector: 'app-show-photo',
   templateUrl: './show-photo.component.html',
   styleUrls: ['./show-photo.component.scss']
 })
-export class ShowPhotoComponent implements OnInit {
-  showMeUserAbout: string;
-
-
-  constructor(private router: Router, public authService: AuthService, public dbService: DataBaseService) { }
-
-  ngOnInit() {
-    const path = this.authService.user.uid
-    const db = firebase.firestore();
-  
-
-    let oneUser = db.collection('users').doc(`${path}`)
-   
-    oneUser.get()
-      .then(snap => {
-       this.showMeUserAbout = snap.data().aboutMe;
-  });
-
-
 
 export class ShowPhotoComponent implements OnInit, AfterContentChecked {
   userData: any = {};
@@ -84,14 +61,14 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
     
     if (this.userData.photo == "" || this.userData.photo != this.base64textString.toString() && this.base64textString.toString() != "") {
       this.dbService.database.collection('users')
-        .doc('oZbVhmP51LWibJ9qgbGcGugIBSX2').update({
+        .doc(this.dbService.actualUserKey).update({
           
           userPhoto: this.base64textString.toString()
         })
     }
 
     this.dbService.database.collection('users')
-      .doc('oZbVhmP51LWibJ9qgbGcGugIBSX2').update({
+      .doc(this.dbService.actualUserKey).update({
         aboutMe: this.getTextArea.value,
 
       })

@@ -40,8 +40,7 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
   subUserArray(){
     this.dbService.sendUserArray().subscribe(data=>{
       this.userArray = data;
-      console.log(this.userArray);
-      console.log(data)
+      
     })
   }
   addNewOpinion(){
