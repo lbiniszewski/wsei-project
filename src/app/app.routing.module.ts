@@ -41,6 +41,11 @@ const appRoutes: Routes = [
     path: 'login',
     component: LoginComponent
   },
+  //dodanie sciezki do routingu, podstrona jaka bedzie sie wczytywala jak klikniemy guzik edit
+  {
+    path: 'profile/edit-profile',
+    component: EditProfileComponent
+  },
   {
     path: '**',
     component: PageNotFoundComponent

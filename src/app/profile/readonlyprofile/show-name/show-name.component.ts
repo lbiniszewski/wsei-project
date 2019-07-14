@@ -9,6 +9,7 @@ import { Component, OnInit, NgModule, OnDestroy, Output,EventEmitter } from '@an
 import { DataBaseService } from 'src/app/data-base.service';
 import {User} from 'src/app/user.model'
 import { Subscription, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 
@@ -60,7 +61,9 @@ export class ShowNameComponent implements OnInit {
   editBtn:any;
   data:any = {};
   subscription: Subscription;
-  constructor(private dbService: DataBaseService) {
+  
+  //dodalem do konstruktora routing w celu uzycia go w funkcji editProfile
+  constructor(private router: Router, private dbService: DataBaseService) {
     this.subscription = this.dbService.sendUserData().subscribe(data =>{
       this.data = data
       
@@ -84,7 +87,10 @@ export class ShowNameComponent implements OnInit {
     
   }
   
-
+  //Zadaniem funkcji jest przekierowanie do komponentu zajmujacego sie edycja profilu
+  editProfile(){
+    this.router.navigate(['/profile/edit-profile'])
+  }
 
 
 
