@@ -9,19 +9,18 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 })
 export class ShowOpinionComponent implements OnInit,AfterContentChecked {
   
-  opinionData: any = {};
+  opinionData: any = [];
   userOpinionData: any = {};
   getAddOpinionBtn:any;
   textAreaOpinionValue:any;
   safeImage:any;
-  userArray:any = [];
+  userOpinionArray:any = [];
   constructor(private dbService: DataBaseService,
     private sanitizer:DomSanitizer) {
     this.subOpinionData();
     this.subUserOpinionName();
     this.subUserArray();
-    console.log(this.opinionData)
-    console.log(this.userArray)
+    
   }
 
   subOpinionData() {
@@ -34,12 +33,12 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
        this.userOpinionData = data;
       
        this.makeSafeUrl();
-       console.log(this.userOpinionData);
+       
      })
    }
   subUserArray(){
     this.dbService.sendUserArray().subscribe(data=>{
-      this.userArray = data;
+      this.userOpinionArray = data;
       
     })
   }
@@ -47,7 +46,7 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
     this.getAddOpinionBtn.style.display = 'block'
   }
   sendDataToDataBase(){
-    console.log(this.textAreaOpinionValue)
+    
     this.dbService.database.collection('users')
       .doc(this.dbService.actualUserKey)
       .collection('opinionAboutUser')
@@ -58,7 +57,7 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
   }
   makeSafeUrl() {
     this.safeImage = this.sanitizer.bypassSecurityTrustResourceUrl(this.userOpinionData.photo);
-    console.log(this.safeImage)
+   
   } 
   ngOnInit() {
     

@@ -24,12 +24,12 @@ export class DataBaseService {
     new Friend('3', 'Wyswietlanie informacji o uzytkowniku', 'Nowak', 'Jan', 'ciag znakow do fotografi'),
     new Friend('4', 'Wyswietlanie informacji o uzytkowniku', 'Wojciechowska', 'Katarzyna', 'ciag znakow do fotografi'),
   ]
-   FriendS = [
-     new Friend('1','','Pawel','Malinowski', 'Uruchamia informacje o użytkowniku'),
-     new Friend('2','','Edyta','Oziemska', 'Uruchamia informacje o użytkowniku'),
-     new Friend('3','','Ryszard','Skoneczny', 'Uruchamia informacje o użytkowniku'),
-     new Friend('4','','Malwina','Buga', 'Uruchamia informacje o użytkowniku'),
-   ];
+  FriendS = [
+    new Friend('1', '', 'Pawel', 'Malinowski', 'Uruchamia informacje o użytkowniku'),
+    new Friend('2', '', 'Edyta', 'Oziemska', 'Uruchamia informacje o użytkowniku'),
+    new Friend('3', '', 'Ryszard', 'Skoneczny', 'Uruchamia informacje o użytkowniku'),
+    new Friend('4', '', 'Malwina', 'Buga', 'Uruchamia informacje o użytkowniku'),
+  ];
 
 
 
@@ -50,12 +50,13 @@ export class DataBaseService {
   }
   public actualUserKey: string = window.localStorage.getItem('actualUserID')
   private userData = new Subject<User>();
-  private userOpinionData = new Subject<Opinion>();
+  private userOpinionData = new Subject<[Opinion]>();
   private userDataWhichGaveOpinion = new Subject<User>();
-  // private userOpinionKey = 'whjbKVHSLiarH2YYhv6ktntpcS72';
+  public userOpinionKey = '';
   public buttonClickTrack = new Subject<any>();
   public opinionDataToSend = new Subject<any>();
-  public arrayOfUserOpinion: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
+  public arrayOfUserOpinion = new Subject<[{}]>();
+  // public arrayOfUserOpinion = []
   getUserData(key: string) {
     this.database
       .collection('users')
@@ -68,7 +69,7 @@ export class DataBaseService {
           photo: doc.data().userPhoto
         })
       })
-      this.getUserOpinionData(this.actualUserKey)
+    this.getUserOpinionData(this.actualUserKey)
   }
   getUserDataWhichGaveOpinion(key: string) {
     this.database
@@ -81,21 +82,40 @@ export class DataBaseService {
           aboutMe: doc.data().aboutMe,
           photo: doc.data().userPhoto
         })
-        console.log(doc.data())
+        
       })
   }
-  getUserOpinionData(key:string) {
+  getUserOpinionData(userkey: string) {
     this.database.collection('users')
-      .doc(key)
+      .doc(userkey)
       .collection('opinionAboutUser')
       .doc('SRImNX5L3DTktcOvPoe8F0vSpQl1')
       .get().toPromise().then(doc => {
-        this.userOpinionData.next({
+        this.userOpinionData.next([{
           $opinionKey: doc.id,
           opinionAboutUser: doc.data().opinion
-        })
+        }])
         // this.userOpinionKey = doc.id
       })
+
+  }
+  arrayOfUserWhichGaveOpinion() {
+    let opinionRef =  this.database.collection('users').doc(this.actualUserKey).collection('opinionAboutUser');
+    let userRef = this.database.collection('users');
+    
+      opinionRef.get().toPromise().then(snapshot => {
+        snapshot.forEach(doc => {
+          this.arrayOfUserOpinion.next([{
+            key: doc.id,
+            
+            opinion: doc.data().opinion,
+          }])
+          
+          this.userOpinionKey = doc.id;
+
+        })
+      });
+     
 
   }
   sendUserData(): Observable<any> {
@@ -108,28 +128,12 @@ export class DataBaseService {
     return this.userDataWhichGaveOpinion.asObservable();
   }
   sendUserArray(): Observable<any[]> {
-    
+
     return this.arrayOfUserOpinion.asObservable()
   }
-  arrayOfUserWhichGaveOpinion() {
-    this.database.collection('users').doc(this.actualUserKey).collection('opinionAboutUser')
-      .get().toPromise().then(snapshot => {
-        snapshot.forEach(doc => {
-          this.getUserDataWhichGaveOpinion(doc.id)
-          this.arrayOfUserOpinion.value.push(this.userDataWhichGaveOpinion)
-          
-          console.log(doc.id)
-          
-        })
-      });
-      console.log(this.arrayOfUserOpinion)
-      
-  }
   constructor(public database: AngularFirestore) {
-    
-    console.log(this.actualUserKey)
-    this.getUserData(this.actualUserKey);
-    this.getUserOpinionData(this.actualUserKey)
+
+   
     // this.getUserDataWhichGaveOpinion(this.userOpinionKey)
     this.arrayOfUserWhichGaveOpinion()
   }
@@ -137,5 +141,5 @@ export class DataBaseService {
 }
 
 export class Friend {
-  constructor( public id: string, public aboutMe: string, public surname: string, public userName: string, public userPhoto: string) { }
+  constructor(public id: string, public aboutMe: string, public surname: string, public userName: string, public userPhoto: string) { }
 }

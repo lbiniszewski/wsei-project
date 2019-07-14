@@ -13,13 +13,13 @@
             <button type="button" class="btn btn-primary btn-sm sendBtn" (click)="sendDataToDataBase()">Wyślij</button>
         </div>
     </div>
-    <div class="loadedOpinion" *ngFor="let user of userArray">
+    <div class="loadedOpinion" *ngFor="let user of userOpinionArray">
         <div>
             <img [src]="safeImage">
             <h3>{{userOpinionData.name}} {{userOpinionData.surname}}</h3>
         </div>
         <p class="opinionContent">
-            {{opinionData.opinionAboutUser}}
+            {{user.opinion}}
         </p>
     </div>
 </div>
