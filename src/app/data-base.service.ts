@@ -50,12 +50,13 @@ export class DataBaseService {
   }
   public actualUserKey: string = window.localStorage.getItem('actualUserID')
   private userData = new Subject<User>();
-  private userOpinionData = new Subject<[Opinion]>();
+  // private userOpinionData = new Subject<[Opinion]>();
   private userDataWhichGaveOpinion = new Subject<User>();
   public userOpinionKey = '';
   public buttonClickTrack = new Subject<any>();
   public opinionDataToSend = new Subject<any>();
-  public arrayOfUserOpinion = new Subject<[{}]>();
+  public arrayOfUserOpinion = new Subject<any>();
+  public temporaryArray = []
   // public arrayOfUserOpinion = []
   getUserData(key: string) {
     this.database
@@ -69,7 +70,6 @@ export class DataBaseService {
           photo: doc.data().userPhoto
         })
       })
-    this.getUserOpinionData(this.actualUserKey)
   }
   getUserDataWhichGaveOpinion(key: string) {
     this.database
@@ -85,45 +85,58 @@ export class DataBaseService {
         
       })
   }
-  getUserOpinionData(userkey: string) {
-    this.database.collection('users')
-      .doc(userkey)
-      .collection('opinionAboutUser')
-      .doc('SRImNX5L3DTktcOvPoe8F0vSpQl1')
-      .get().toPromise().then(doc => {
-        this.userOpinionData.next([{
-          $opinionKey: doc.id,
-          opinionAboutUser: doc.data().opinion
-        }])
-        // this.userOpinionKey = doc.id
-      })
+  // getUserOpinionData(userkey: string) {
+  //   this.database.collection('users')
+  //     .doc(userkey)
+  //     .collection('opinionAboutUser')
+  //     .doc('SRImNX5L3DTktcOvPoe8F0vSpQl1')
+  //     .get().toPromise().then(doc => {
+  //       this.userOpinionData.next([{
+  //         $opinionKey: doc.id,
+  //         opinionAboutUser: doc.data().opinion
+  //       }])
+  //       // this.userOpinionKey = doc.id
+  //     })
 
-  }
+  // }
   arrayOfUserWhichGaveOpinion() {
     let opinionRef =  this.database.collection('users').doc(this.actualUserKey).collection('opinionAboutUser');
     let userRef = this.database.collection('users');
     
       opinionRef.get().toPromise().then(snapshot => {
+        if(!snapshot.empty){
         snapshot.forEach(doc => {
-          this.arrayOfUserOpinion.next([{
-            key: doc.id,
-            
-            opinion: doc.data().opinion,
-          }])
-          
-          this.userOpinionKey = doc.id;
+          userRef.get().toPromise().then(data=>{
+            data.forEach(doc2=>{
+              if(doc.id == doc2.id){
+                let newObj = {
+                  key:doc.id,
+                  name:doc2.data().userName,
+                  surname:doc2.data().surname,
+                  photo:doc2.data().userPhoto,
+                  opinion:doc.data().opinion
+                }
+                this.temporaryArray.push(newObj)
+                this.arrayOfUserOpinion.next(this.temporaryArray)
+              }else{
 
+              }
+              // this.userOpinionKey = doc.id;
+            })
+          })
         })
-      });
+        console.log(this.arrayOfUserOpinion)
+        console.log(this.temporaryArray)
+      }});
      
 
   }
   sendUserData(): Observable<any> {
     return this.userData.asObservable();
   }
-  sendUserOpinionData(): Observable<any> {
-    return this.userOpinionData.asObservable();
-  }
+  // sendUserOpinionData(): Observable<any> {
+  //   return this.userOpinionData.asObservable();
+  // }
   sendUserWhichGaveOpinion(): Observable<any> {
     return this.userDataWhichGaveOpinion.asObservable();
   }

@@ -17,17 +17,17 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
   userOpinionArray:any = [];
   constructor(private dbService: DataBaseService,
     private sanitizer:DomSanitizer) {
-    this.subOpinionData();
+    // this.subOpinionData();
     this.subUserOpinionName();
     this.subUserArray();
     
   }
 
-  subOpinionData() {
-    this.dbService.sendUserOpinionData().subscribe(data => {
-      this.opinionData = data
-    })
-  }
+  // subOpinionData() {
+  //   this.dbService.sendUserOpinionData().subscribe(data => {
+  //     this.opinionData = data
+  //   })
+  // }
    subUserOpinionName() {
      this.dbService.sendUserWhichGaveOpinion().subscribe(data => {
        this.userOpinionData = data;
@@ -39,7 +39,8 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
   subUserArray(){
     this.dbService.sendUserArray().subscribe(data=>{
       this.userOpinionArray = data;
-      
+      this.makeSafeUrl();
+      console.log(this.userOpinionArray)
     })
   }
   addNewOpinion(){

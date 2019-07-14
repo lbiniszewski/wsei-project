@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   logout(){
-    window.localStorage.removeItem('actualUserID')
+    window.localStorage.removeItem('actualUserID')//removing user key /adam
     this.angularFire.auth.signOut();
   }
 

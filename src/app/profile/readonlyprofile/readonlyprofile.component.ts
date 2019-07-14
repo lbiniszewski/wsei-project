@@ -38,7 +38,6 @@ export class ReadonlyprofileComponent implements OnInit {
   
   ngOnInit() {
     this.dbService.getUserData(this.dbService.actualUserKey);
-    this.dbService.getUserOpinionData(this.dbService.actualUserKey)
   }
 
 }
