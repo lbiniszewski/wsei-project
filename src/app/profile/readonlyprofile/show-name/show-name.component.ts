@@ -59,9 +59,12 @@ export class ShowNameComponent implements OnInit {
   public buttonClickEventTrack = new Subject();
   click:boolean = true;
   editBtn:any;
+  userNameParagraph:any;
   data:any = {};
   subscription: Subscription;
-  
+  editUserNameParagraph:any;
+  nameValue:any;
+  surnameValue:any;
   //dodalem do konstruktora routing w celu uzycia go w funkcji editProfile
   constructor(private router: Router, private dbService: DataBaseService) {
     this.subscription = this.dbService.sendUserData().subscribe(data =>{
@@ -73,16 +76,30 @@ export class ShowNameComponent implements OnInit {
     this.dbService.buttonClickTrack.next(this.click)
     console.log(this.click)
     this.editBtn = document.querySelector('#editBtn')
+    this.userNameParagraph = document.querySelector('.nameSurnameParagraph')
+    this.editUserNameParagraph = document.querySelector('.editNameAndSurname')
     if(this.click ===true&&this.editBtn.innerHTML =="Edytuj"){
       this.editBtn.innerHTML = 'Zapisz'
       this.click = false;
+      this.userNameParagraph.style.display = "none"
+      this.editUserNameParagraph.style.display = "flex"
     }else{
+      this.sendNewNameAndSurname();
       this.editBtn.innerHTML = 'Edytuj'
       this.click=true;
     }
-    
   }
+  sendNewNameAndSurname(){
+    this.nameValue = document.querySelector('.imie')
+    this.surnameValue = document.querySelector('.nazwisko')
+    this.dbService.database.collection('users')
+    .doc(this.dbService.actualUserKey).update({
+      userName:this.nameValue.value,
+      surname:this.surnameValue.value
 
+    })
+    console.log(this.nameValue.value,this.surnameValue.value)
+  }
   ngOnInit() {
     
   }

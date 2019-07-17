@@ -1,16 +1,21 @@
 <div class="nameContainer" >
-  <h1 class="nameSurnameParagraph">
+  <h1 class="nameSurnameParagraph mat-display-4">
     {{data.name}} {{data.surname}}
   </h1>
-  <button type="button" class="btn btn-primary btn-sm editBtn" id="editBtn"(click)="btnClicked();">Edytuj</button>
+  <div class="input-group editNameAndSurname">
+    <input type="text" class="form-control imie"placeholder="Imie">
+    <input type="text" class="form-control nazwisko"placeholder="Nazwisko">
+  </div>
 
+  <button type="button" class="btn btn-primary btn-sm editBtn" id="editBtn"(click)="btnClicked();">Edytuj</button>
+</div>
   <!--Dodanie przycisku oraz odniesienia do funkcji, przycisk wyzej zostawilem 
   moze jest gdzies uzyty
   -->
-  <button (click)="editProfile()" type="button" class="btn btn-primary btn-sm editBtn">
+  <!-- <button (click)="editProfile()" type="button" class="btn btn-primary btn-sm editBtn">
     
     Edytuj z Routingiem
  
-  </button>
+  </button> -->
 
-  </div>
+ 
