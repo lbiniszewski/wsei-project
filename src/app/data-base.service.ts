@@ -126,8 +126,7 @@ export class DataBaseService {
             })
           })
         })
-        console.log(this.arrayOfUserOpinion)
-        console.log(temporaryArrayOfUserOpinion)
+        
       }});
   }
   getArrayOfThematicalModule(key:any){
@@ -140,10 +139,6 @@ export class DataBaseService {
         }
         temporaryArrayOfThematicalModules.push(newObj)
         this.arrayOfThematicalModules.next(temporaryArrayOfThematicalModules)
-        console.log(newObj)
-        console.log(doc.data())
-        console.log(temporaryArrayOfThematicalModules)
-        console.log(this.arrayOfThematicalModules)
       })
     })
 

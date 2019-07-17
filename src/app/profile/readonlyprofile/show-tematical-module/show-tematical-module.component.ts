@@ -13,12 +13,12 @@ export class ShowTematicalModuleComponent implements OnInit {
   constructor(private dbService: DataBaseService) {
     this.dbService.sendThematicalModuleArray().subscribe(data=>{
       this.thematicalModulesArray = data
-      console.log(this.thematicalModulesArray)
+      
     })
     this.dbService.buttonClickTrack.subscribe(event => {
      this.clicked = event
      this.writingInTextArea()
-     console.log(this.clicked)
+     
     })
   }
   writingInTextArea() {
@@ -35,9 +35,9 @@ export class ShowTematicalModuleComponent implements OnInit {
     });}
     sendTextAreasValueToDB(){
       
-      console.log(this.getTextArea[0])
+      
       for(let i=0; i<this.thematicalModulesArray.length;i++){
-        console.log(this.thematicalModulesArray[i].topicTitle)
+        
       this.dbService.database.collection('users').doc(this.dbService.actualUserKey).collection('thematicalModule')
       .doc(this.thematicalModulesArray[i].topicTitle)
       .update({

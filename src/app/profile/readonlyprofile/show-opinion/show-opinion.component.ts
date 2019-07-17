@@ -40,7 +40,7 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
     this.dbService.sendUserArray().subscribe(data=>{
       this.userOpinionArray = data;
       this.makeSafeUrl();
-      console.log(this.userOpinionArray)
+      
     })
   }
   addNewOpinion(){
