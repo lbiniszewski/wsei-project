@@ -68,6 +68,19 @@ margin-bottom: 25px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    
+    .addBtn
+    {
+        display:block;
+    }
+    
+}
+.titleModuleContainer
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color:white;
     .addBtn
     {
         display:block;
@@ -86,4 +99,7 @@ margin-bottom: 25px;
         width:80px;
         height:30px;
     }
+}
+.noGrayTextArea[readonly]{
+    background: white;
 }

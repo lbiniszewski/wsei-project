@@ -56,8 +56,9 @@ export class DataBaseService {
   public buttonClickTrack = new Subject<any>();
   public opinionDataToSend = new Subject<any>();
   public arrayOfUserOpinion = new Subject<any>();
-  public temporaryArray = []
-  // public arrayOfUserOpinion = []
+  public arrayOfThematicalModules = new Subject<any>();
+  
+  
   getUserData(key: string) {
     this.database
       .collection('users')
@@ -102,7 +103,7 @@ export class DataBaseService {
   arrayOfUserWhichGaveOpinion() {
     let opinionRef =  this.database.collection('users').doc(this.actualUserKey).collection('opinionAboutUser');
     let userRef = this.database.collection('users');
-    
+    let temporaryArrayOfUserOpinion = [];
       opinionRef.get().toPromise().then(snapshot => {
         if(!snapshot.empty){
         snapshot.forEach(doc => {
@@ -116,8 +117,8 @@ export class DataBaseService {
                   photo:doc2.data().userPhoto,
                   opinion:doc.data().opinion
                 }
-                this.temporaryArray.push(newObj)
-                this.arrayOfUserOpinion.next(this.temporaryArray)
+                temporaryArrayOfUserOpinion.push(newObj)
+                this.arrayOfUserOpinion.next(temporaryArrayOfUserOpinion)
               }else{
 
               }
@@ -126,10 +127,27 @@ export class DataBaseService {
           })
         })
         console.log(this.arrayOfUserOpinion)
-        console.log(this.temporaryArray)
+        console.log(temporaryArrayOfUserOpinion)
       }});
-     
+  }
+  getArrayOfThematicalModule(key:any){
+    let temporaryArrayOfThematicalModules = [];
+    this.database.collection('users').doc(key).collection('thematicalModule').get().toPromise().then(snapshot=>{
+      snapshot.forEach(doc=>{
+        let newObj ={
+          topicTitle:doc.id,
+          topicDesc:doc.data().desc
+        }
+        temporaryArrayOfThematicalModules.push(newObj)
+        this.arrayOfThematicalModules.next(temporaryArrayOfThematicalModules)
+        console.log(newObj)
+        console.log(doc.data())
+        console.log(temporaryArrayOfThematicalModules)
+        console.log(this.arrayOfThematicalModules)
+      })
+    })
 
+    
   }
   sendUserData(): Observable<any> {
     return this.userData.asObservable();
@@ -144,9 +162,12 @@ export class DataBaseService {
 
     return this.arrayOfUserOpinion.asObservable()
   }
+  sendThematicalModuleArray(): Observable<any>{
+    return this.arrayOfThematicalModules.asObservable();
+  }
   constructor(public database: AngularFirestore) {
 
-   
+   this.getArrayOfThematicalModule(this.actualUserKey);
     // this.getUserDataWhichGaveOpinion(this.userOpinionKey)
     this.arrayOfUserWhichGaveOpinion()
   }
