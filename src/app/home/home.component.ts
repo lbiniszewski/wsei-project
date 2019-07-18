@@ -14,22 +14,27 @@ export class HomeComponent implements OnInit {
 
 
   friend: Friend;
-  
-
-  constructor(private dbService: DataBaseService, private router: Router, public authService: AuthService) { }
-
-  
-
-
+  userLogged:boolean
+  btnClicked:boolean=false;
+  constructor(private dbService: DataBaseService, private router: Router, public authService: AuthService) {
+    this.dbService.searchBtnClick.subscribe(data=>{
+      this.btnClicked = data
+      console.log(this.btnClicked)
+    })
+    
+   }
   ngOnInit() {
     this.friend = this.dbService.getRandomFriend();
-
-
-
-
-    
+    this.isUserLogged()
   }
-
+  isUserLogged()//sprawdzenie czy użytkownik jest zalogowany jeśli tak to pokaż profil
+  {
+    if(this.dbService.loggedUserKey!=""){
+      this.userLogged = true;
+    }else{
+      this.userLogged = false
+    }
+  }
   getFriend() {
     this.router.navigate(['/friends', this.friend.id]);
   }

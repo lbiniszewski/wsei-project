@@ -61,14 +61,14 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
     
     if (this.userData.photo == "" || this.userData.photo != this.base64textString.toString() && this.base64textString.toString() != "") {
       this.dbService.database.collection('users')
-        .doc(this.dbService.actualUserKey).update({
+        .doc(this.dbService.loggedUserKey).update({
           
           userPhoto: this.base64textString.toString()
         })
     }
 
     this.dbService.database.collection('users')
-      .doc(this.dbService.actualUserKey).update({
+      .doc(this.dbService.loggedUserKey).update({
         aboutMe: this.getTextArea.value,
 
       })

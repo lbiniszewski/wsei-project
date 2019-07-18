@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { DataBaseService } from 'src/app/data-base.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { DataBaseService } from 'src/app/data-base.service';
   templateUrl: './show-tematical-module.component.html',
   styleUrls: ['./show-tematical-module.component.scss']
 })
-export class ShowTematicalModuleComponent implements OnInit {
+export class ShowTematicalModuleComponent implements OnInit,AfterContentChecked {
   thematicalModulesArray = [];
   clicked:boolean;
   getTextArea:any;
@@ -38,7 +38,7 @@ export class ShowTematicalModuleComponent implements OnInit {
       
       for(let i=0; i<this.thematicalModulesArray.length;i++){
         
-      this.dbService.database.collection('users').doc(this.dbService.actualUserKey).collection('thematicalModule')
+      this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('thematicalModule')
       .doc(this.thematicalModulesArray[i].topicTitle)
       .update({
       desc:this.getTextArea[i].value

@@ -103,7 +103,7 @@ const firebaseConfig = {
     ImageCropperModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [DataBaseService, AuthService],
+  providers: [DataBaseService, AuthService,ReadonlyprofileComponent],
   bootstrap: [AppComponent]
 })
 

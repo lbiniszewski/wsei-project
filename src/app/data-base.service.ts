@@ -48,7 +48,9 @@ export class DataBaseService {
     const n = Math.floor(Math.random() * 3);
     return this.Friends[n];
   }
-  public actualUserKey: string = window.localStorage.getItem('actualUserID')
+  public actualUserKey: string = window.localStorage.getItem('actualUserKey')
+  public loggedUserKey:string = window.localStorage.getItem('loggedUserId')
+  public searchBtnClick= new Subject<any>();
   private userData = new Subject<User>();
   // private userOpinionData = new Subject<[Opinion]>();
   private userDataWhichGaveOpinion = new Subject<User>();
@@ -100,8 +102,8 @@ export class DataBaseService {
   //     })
 
   // }
-  arrayOfUserWhichGaveOpinion() {
-    let opinionRef =  this.database.collection('users').doc(this.actualUserKey).collection('opinionAboutUser');
+  arrayOfUserWhichGaveOpinion(key:any) {
+    let opinionRef =  this.database.collection('users').doc(key).collection('opinionAboutUser');
     let userRef = this.database.collection('users');
     let temporaryArrayOfUserOpinion = [];
       opinionRef.get().toPromise().then(snapshot => {
@@ -122,7 +124,6 @@ export class DataBaseService {
               }else{
 
               }
-              // this.userOpinionKey = doc.id;
             })
           })
         })
@@ -147,9 +148,6 @@ export class DataBaseService {
   sendUserData(): Observable<any> {
     return this.userData.asObservable();
   }
-  // sendUserOpinionData(): Observable<any> {
-  //   return this.userOpinionData.asObservable();
-  // }
   sendUserWhichGaveOpinion(): Observable<any> {
     return this.userDataWhichGaveOpinion.asObservable();
   }
@@ -161,10 +159,6 @@ export class DataBaseService {
     return this.arrayOfThematicalModules.asObservable();
   }
   constructor(public database: AngularFirestore) {
-
-   this.getArrayOfThematicalModule(this.actualUserKey);
-    // this.getUserDataWhichGaveOpinion(this.userOpinionKey)
-    this.arrayOfUserWhichGaveOpinion()
   }
 
 }

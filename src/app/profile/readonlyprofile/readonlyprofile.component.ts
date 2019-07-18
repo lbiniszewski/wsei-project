@@ -33,11 +33,36 @@ import { DataBaseService } from 'src/app/data-base.service';
   ],
 })
 export class ReadonlyprofileComponent implements OnInit {
-
-  constructor(private dbService:DataBaseService) { }
   
-  ngOnInit() {
-    this.dbService.getUserData(this.dbService.actualUserKey);
+  btnClicked:boolean=false;
+  constructor(private dbService:DataBaseService) { 
+    this.dbService.searchBtnClick.subscribe(data=>{
+      this.btnClicked = data
+      console.log(this.btnClicked)
+    })
   }
-
+  ngOnInit() {
+    if(this.btnClicked===false){
+      
+      this.showActualUser()
+    }else if(this.btnClicked===true){
+      
+      this.showAnotherUser()
+      
+    }
+    
+  }
+  showActualUser(){
+    this.dbService.getUserData(this.dbService.loggedUserKey);
+      this.dbService.getArrayOfThematicalModule(this.dbService.loggedUserKey);
+      this.dbService.arrayOfUserWhichGaveOpinion(this.dbService.loggedUserKey)
+  }
+  showAnotherUser(){
+    this.dbService.getUserData(this.dbService.actualUserKey);
+      this.dbService.getArrayOfThematicalModule(this.dbService.actualUserKey);
+      this.dbService.arrayOfUserWhichGaveOpinion(this.dbService.actualUserKey);
+      
+  }
+ 
 }
+  

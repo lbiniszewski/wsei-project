@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   user: User; //jest to token, użytkownik który jest zawracany po zalogowaniu
-  
   constructor(private angularFire: AngularFireAuth, private router: Router) { 
     //metoda sprawdzająca użytkownika, będzie informowała czy użytkownik jest zalogowany czy nie jest
     // metoda zwraca observable którym jest użytkownik albo null
@@ -28,7 +27,8 @@ export class AuthService {
   login(email: string, password: string){
     this.angularFire.auth.signInWithEmailAndPassword(email, password)
     .then(user=>{
-      window.localStorage.setItem('actualUserID',user.user.uid)//getting user key (adam)
+      
+      window.localStorage.setItem('loggedUserId',user.user.uid)//getting user key (adam)
       this.router.navigate(['/home']);
       
       
@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   logout(){
-    window.localStorage.removeItem('actualUserID')//removing user key /adam
+    window.localStorage.removeItem('loggedUserId')//removing user key /adam
     this.angularFire.auth.signOut();
   }
 

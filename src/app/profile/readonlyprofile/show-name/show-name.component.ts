@@ -1,10 +1,3 @@
-//import { Component, OnInit, NgModule, Input } from '@angular/core';
-// import { AuthService } from 'src/app/auth/auth.service';
-// import { Router } from '@angular/router';
-// import { DataBaseService, Friend } from 'src/app/data-base.service';
-// import * as firebase from 'firebase';
-// import { Observable } from 'rxjs';
-// import { map, take} from 'rxjs/operators';
 import { Component, OnInit, NgModule, OnDestroy, Output,EventEmitter } from '@angular/core';
 import { DataBaseService } from 'src/app/data-base.service';
 import {User} from 'src/app/user.model'
@@ -27,52 +20,59 @@ import { Router } from '@angular/router';
   ]
 })
 export class ShowNameComponent implements OnInit {
-  
-//   friend: Friend;
-//  check = '5';
-//  showMeUserSurname: string;
-//  showMeUserName: string;
-
-  // constructor(private router: Router, public authService: AuthService, public dbService: DataBaseService) { }
-
-  // ngOnInit() {
-  //   this.friend = this.dbService.getRandomFriend();
-
-    
-
-  //     const path = this.authService.user.uid
-  //     const db = firebase.firestore();
-    
-
-  //     let oneUser = db.collection('users').doc(`${path}`)
-     
-  //     oneUser.get()
-  //       .then(snap => {
-  //        this.showMeUserSurname = snap.data().surname;
-  //   });
-
-  //     oneUser.get()
-  //       .then(snap => {
-  //       this.showMeUserName = snap.data().userName;
-  //     });
-  //   }
-  public buttonClickEventTrack = new Subject();
   click:boolean = true;
   editBtn:any;
+  addToFriendBtn:any;
   userNameParagraph:any;
   data:any = {};
   subscription: Subscription;
   editUserNameParagraph:any;
   nameValue:any;
   surnameValue:any;
+  searchBtnClick:boolean;
   //dodalem do konstruktora routing w celu uzycia go w funkcji editProfile
   constructor(private router: Router, private dbService: DataBaseService) {
     this.subscription = this.dbService.sendUserData().subscribe(data =>{
       this.data = data
-      
+    })
+    this.dbService.searchBtnClick.subscribe(data=>{
+      this.searchBtnClick = data
+      console.log(this.searchBtnClick)
+      this.searchBtnClicked()
     })
   }
-  btnClicked(){
+  searchBtnClicked(){
+    this.editBtn = document.querySelector('#editBtn')
+    this.addToFriendBtn = document.querySelector('#addToFriendBtn')
+    this.editBtn.style.display = 'none'
+    if(this.searchBtnClick==true){
+      this.dbService.database.collection('users').doc(this.dbService.loggedUserKey)
+      .collection('friends').doc(this.dbService.actualUserKey).get().toPromise().then(snapshot=>{
+        console.log(snapshot.data())
+        if(snapshot.exists){
+          this.addToFriendBtn.style.display = 'block'
+          this.addToFriendBtn.innerHTML = 'Usuń znajomego'
+
+        }else{
+          this.addToFriendBtn.style.display= 'block'
+          this.addToFriendBtn.innerHTML= 'Dodaj do znajomych'
+          
+        }
+      })}
+    else{
+      this.editBtn.style.display = 'block'
+      this.addToFriendBtn.style.display = 'none'
+    }
+  }
+  addToFriends(){
+    let data={}
+    if(this.addToFriendBtn.innerHTML =='Dodaj do znajomych'){
+    this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(this.dbService.actualUserKey).set(data)
+    }else if(this.addToFriendBtn.innerHTML == 'Usuń znajomego'){
+    this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(this.dbService.actualUserKey).delete()
+    }
+  }
+  editBtnClicked(){
     this.dbService.buttonClickTrack.next(this.click)
     console.log(this.click)
     this.editBtn = document.querySelector('#editBtn')
@@ -93,7 +93,7 @@ export class ShowNameComponent implements OnInit {
     this.nameValue = document.querySelector('.imie')
     this.surnameValue = document.querySelector('.nazwisko')
     this.dbService.database.collection('users')
-    .doc(this.dbService.actualUserKey).update({
+    .doc(this.dbService.loggedUserKey).update({
       userName:this.nameValue.value,
       surname:this.surnameValue.value
 
