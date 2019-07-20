@@ -19,13 +19,16 @@ export class HomeComponent implements OnInit {
   constructor(private dbService: DataBaseService, private router: Router, public authService: AuthService) {
     this.dbService.searchBtnClick.subscribe(data=>{
       this.btnClicked = data
-      console.log(this.btnClicked)
+     
     })
+    
     
    }
   ngOnInit() {
     this.friend = this.dbService.getRandomFriend();
     this.isUserLogged()
+
+    this.dbService.searchBtnClick.next(this.btnClicked)
   }
   isUserLogged()//sprawdzenie czy użytkownik jest zalogowany jeśli tak to pokaż profil
   {

@@ -8,8 +8,7 @@ import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app.routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DataBaseService } from './data-base.service';
-import { FriendDetailComponent } from './friends/friend-detail/friend-detail.component';
-import { FriendsListComponent } from './friends/friends-list/friends-list.component';
+
 import { TemplateDrivenFormComponent } from './about/template-driven-form/template-driven-form.component';
 import { ReactiveFormComponent } from './about/reactive-form/reactive-form.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -66,8 +65,6 @@ const firebaseConfig = {
     FriendsComponent,
     AboutComponent,
     PageNotFoundComponent,
-    FriendDetailComponent,
-    FriendsListComponent,
     TemplateDrivenFormComponent,
     ReactiveFormComponent,
     LoginComponent,

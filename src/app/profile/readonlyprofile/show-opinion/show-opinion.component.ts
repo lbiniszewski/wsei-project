@@ -8,7 +8,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
   styleUrls: ['./show-opinion.component.scss']
 })
 export class ShowOpinionComponent implements OnInit,AfterContentChecked {
-   
+  actualUserKey:any;
   getContainerOpinionBtn:any;
   textAreaOpinionValue:any;
   safeImage:any;
@@ -21,15 +21,19 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
     
     this.dbService.searchBtnClick.subscribe(data=>{
       this.searchBtnClick = data
-      console.log(this.searchBtnClick)
+     
+    })
+    this.dbService.actualUserKey.subscribe(data=>{
+      this.actualUserKey = data
+     
       this.showAddBtn();
     })
   }
   showAddBtn(){
     if(this.searchBtnClick==true){
       this.dbService.database.collection('users').doc(this.dbService.loggedUserKey)
-      .collection('friends').doc(this.dbService.actualUserKey).get().toPromise().then(snapshot=>{
-        console.log(snapshot.data())
+      .collection('friends').doc(this.actualUserKey).get().toPromise().then(snapshot=>{
+        
         if(snapshot.exists){
           this.getAddBtn.style.display = 'block'
         }
@@ -51,7 +55,7 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
   sendDataToDataBase(){
     
     this.dbService.database.collection('users')
-      .doc(this.dbService.actualUserKey)
+      .doc(this.actualUserKey)
       .collection('opinionAboutUser')
       .doc(this.dbService.loggedUserKey).set({
         opinion:this.textAreaOpinionValue.value

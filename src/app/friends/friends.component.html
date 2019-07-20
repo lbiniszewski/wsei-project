@@ -1,1 +1,11 @@
+<div class="friendsContainer">
+    <h1>Twoi znajomi :</h1>
+    <div *ngFor="let friend of arrayOfFriends" class="friend">
+        <div>
+            <img [src]=friend.photo>
+            <h3>{{friend.name}} {{friend.surname}}</h3>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm removeFriend" (click)="removeFriend(friend.key)">Usuń znajomego</button>
+    </div>
+</div>
 <router-outlet></router-outlet>

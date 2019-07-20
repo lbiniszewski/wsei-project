@@ -33,12 +33,16 @@ import { DataBaseService } from 'src/app/data-base.service';
   ],
 })
 export class ReadonlyprofileComponent implements OnInit {
-  
+  actualUserKey:any;
   btnClicked:boolean=false;
   constructor(private dbService:DataBaseService) { 
     this.dbService.searchBtnClick.subscribe(data=>{
       this.btnClicked = data
-      console.log(this.btnClicked)
+     
+    })
+    this.dbService.actualUserKey.subscribe(data=>{
+      this.actualUserKey = data
+     
     })
   }
   ngOnInit() {
@@ -58,9 +62,9 @@ export class ReadonlyprofileComponent implements OnInit {
       this.dbService.arrayOfUserWhichGaveOpinion(this.dbService.loggedUserKey)
   }
   showAnotherUser(){
-    this.dbService.getUserData(this.dbService.actualUserKey);
-      this.dbService.getArrayOfThematicalModule(this.dbService.actualUserKey);
-      this.dbService.arrayOfUserWhichGaveOpinion(this.dbService.actualUserKey);
+    this.dbService.getUserData(this.actualUserKey);
+      this.dbService.getArrayOfThematicalModule(this.actualUserKey);
+      this.dbService.arrayOfUserWhichGaveOpinion(this.actualUserKey);
       
   }
  

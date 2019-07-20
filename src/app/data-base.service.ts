@@ -48,7 +48,7 @@ export class DataBaseService {
     const n = Math.floor(Math.random() * 3);
     return this.Friends[n];
   }
-  public actualUserKey: string = window.localStorage.getItem('actualUserKey')
+  public actualUserKey = new Subject<any>();
   public loggedUserKey:string = window.localStorage.getItem('loggedUserId')
   public searchBtnClick= new Subject<any>();
   private userData = new Subject<User>();

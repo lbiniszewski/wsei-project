@@ -16,16 +16,15 @@ export class AppSearchComponent implements OnInit,AfterContentChecked{
     ) { 
   }
   getUser(){
-    console.log(this.click)
+   
     this.dbService.searchBtnClick.next(this.click)
-    console.log(this.searchBtnValue.value)
+    
     this.dbService.database.collection('users').get().toPromise().then(snapshot=>{
       snapshot.forEach(data=>{
         if(this.searchBtnValue.value == data.data().userName){
-        window.localStorage.setItem('actualUserKey',data.id)
+        this.dbService.actualUserKey.next(data.id)
         this.readOnlyProfComponent.ngOnInit()
-        console.log(this.dbService.searchBtnClick)
-        console.log(data.id,data.data())
+        
         }
         
       })

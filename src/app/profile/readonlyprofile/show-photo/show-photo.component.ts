@@ -26,6 +26,7 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   getImgCropper:any;
+  loggedUserKey:any;
   constructor(private dbService: DataBaseService,
     private sanitizer: DomSanitizer
   ) {
@@ -39,6 +40,7 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
       
       this.writingInTextArea()
     })
+    
   }
   makeSafeUrl() {
     this.safeImage = this.sanitizer.bypassSecurityTrustResourceUrl(this.userData.photo);
@@ -83,7 +85,7 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
       reader.onload = this.handleReaderLoaded.bind(this);
       reader.readAsBinaryString(file);
     }
-    console.log(this.base64textString)
+  
     this.imageChangedEvent = evt;
   }
 
@@ -97,15 +99,15 @@ imageCropped(event: ImageCroppedEvent) {
 imageLoaded() {
   this.getImgCropper = document.querySelector('.imgCropperPopUp')
   this.getImgCropper.style.display="block"
-   console.log('Image loaded')
+   
 }
 cropperReady() {
   
-  console.log('Cropper ready')
+  
   
 }
 loadImageFailed () {
-  console.log('Load failed');
+
 }
 savePhoto(){
   this.getImgCropper.style.display = "none"
