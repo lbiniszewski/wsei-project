@@ -6,7 +6,7 @@ import { DomSanitizer} from '@angular/platform-browser';
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss']
 })
-export class FriendsComponent  {
+export class FriendsComponent implements OnInit  {
   arrayOfFriends= [];
 
   constructor(private dbService:DataBaseService,
@@ -14,6 +14,8 @@ export class FriendsComponent  {
     ){
     this.getFirendArray()
 
+  }
+  ngOnInit(){
   }
   getFirendArray(){
     this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').get().toPromise().then(snapshot=>{
@@ -39,7 +41,7 @@ export class FriendsComponent  {
 
       this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(key).delete()
     })
-    
+
   }
 
 }

@@ -30,6 +30,7 @@ export class ShowNameComponent implements OnInit {
   nameValue: any;
   surnameValue: any;
   searchBtnClick: boolean;
+  loggedUserKey= window.localStorage.getItem('loggedUserId')
   //dodalem do konstruktora routing w celu uzycia go w funkcji editProfile
   constructor(private router: Router, private dbService: DataBaseService) {
     this.subscription = this.dbService.sendUserData().subscribe(data => {
@@ -85,6 +86,8 @@ export class ShowNameComponent implements OnInit {
       this.editUserNameParagraph.style.display = "flex"
     } else {
       this.sendNewNameAndSurname();
+      this.userNameParagraph.style.display = "block"
+      this.editUserNameParagraph.style.display = "none"
       this.editBtn.innerHTML = 'Edytuj'
       this.click = true;
     }
@@ -93,16 +96,16 @@ export class ShowNameComponent implements OnInit {
     this.nameValue = document.querySelector('.imie')
     this.surnameValue = document.querySelector('.nazwisko')
     this.dbService.database.collection('users')
-      .doc(this.dbService.loggedUserKey).update({
+      .doc(this.loggedUserKey).update({
         userName: this.nameValue.value,
         surname: this.surnameValue.value
-
       })
+      this.dbService.getUserData(this.loggedUserKey);
+    this.dbService.arrayOfUserWhichGaveOpinion(this.loggedUserKey)
+    this.dbService.getArrayOfThematicalModule(this.loggedUserKey);
   }
   ngOnInit() {
-
   }
-
   //Zadaniem funkcji jest przekierowanie do komponentu zajmujacego sie edycja profilu
   editProfile() {
     this.router.navigate(['/profile/edit-profile'])

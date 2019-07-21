@@ -35,6 +35,7 @@ import { DataBaseService } from 'src/app/data-base.service';
 export class ReadonlyprofileComponent implements OnInit {
   actualUserKey:any;
   btnClicked:boolean=false;
+  loggedUserKey= window.localStorage.getItem('loggedUserId')
   constructor(private dbService:DataBaseService) { 
     this.dbService.searchBtnClick.subscribe(data=>{
       this.btnClicked = data
@@ -42,31 +43,25 @@ export class ReadonlyprofileComponent implements OnInit {
     })
     this.dbService.actualUserKey.subscribe(data=>{
       this.actualUserKey = data
-     
     })
   }
   ngOnInit() {
     if(this.btnClicked===false){
-      
-      this.showActualUser()
+        this.showLoggedUser()           
     }else if(this.btnClicked===true){
-      
-      this.showAnotherUser()
-      
+      this.showAnotherUser()  
     }
     
   }
-  showActualUser(){
-    this.dbService.getUserData(this.dbService.loggedUserKey);
-      this.dbService.getArrayOfThematicalModule(this.dbService.loggedUserKey);
-      this.dbService.arrayOfUserWhichGaveOpinion(this.dbService.loggedUserKey)
+  showLoggedUser(){
+    this.dbService.getUserData(this.loggedUserKey);
+    this.dbService.arrayOfUserWhichGaveOpinion(this.loggedUserKey)
+    this.dbService.getArrayOfThematicalModule(this.loggedUserKey);
   }
   showAnotherUser(){
     this.dbService.getUserData(this.actualUserKey);
       this.dbService.getArrayOfThematicalModule(this.actualUserKey);
-      this.dbService.arrayOfUserWhichGaveOpinion(this.actualUserKey);
-      
+      this.dbService.arrayOfUserWhichGaveOpinion(this.actualUserKey); 
   }
- 
 }
   

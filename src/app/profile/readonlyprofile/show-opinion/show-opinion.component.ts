@@ -61,6 +61,9 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
         opinion:this.textAreaOpinionValue.value
       })
       this.getContainerOpinionBtn.style.display = 'none'
+      this.dbService.getUserData(this.actualUserKey);
+      this.dbService.arrayOfUserWhichGaveOpinion(this.actualUserKey);
+      this.dbService.getArrayOfThematicalModule(this.actualUserKey);
   }
   makeSafeUrl() {
     this.safeImage = this.sanitizer.bypassSecurityTrustResourceUrl(this.userOpinionArray.photo);

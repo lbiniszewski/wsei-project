@@ -21,15 +21,15 @@ export class AuthService {
     //metoda działa automatycznie ponieważ ją subskrybujemy
     angularFire.authState.subscribe(user=>{
       this.user = user;
-      
+     
     });
   }
-
+  
   login(email: string, password: string){
     this.angularFire.auth.signInWithEmailAndPassword(email, password)
     .then(user=>{
       window.localStorage.setItem('loggedUserId',user.user.uid);//getting user key (adam)
-      this.router.navigate(['/home']);  
+        this.router.navigate(['/home']);    
 }).catch(err=>{
       console.log(err);
     });

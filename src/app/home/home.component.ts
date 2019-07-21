@@ -12,7 +12,7 @@ import * as firebase from 'firebase';
 export class HomeComponent implements OnInit {
 
 
-
+  myprofile=false;
   friend: Friend;
   userLogged:boolean
   btnClicked:boolean=false;
@@ -21,8 +21,6 @@ export class HomeComponent implements OnInit {
       this.btnClicked = data
      
     })
-    
-    
    }
   ngOnInit() {
     this.friend = this.dbService.getRandomFriend();
@@ -41,6 +39,8 @@ export class HomeComponent implements OnInit {
   getFriend() {
     this.router.navigate(['/friends', this.friend.id]);
   }
-
+  myProfile(){
+    this.dbService.searchBtnClick.next(this.myProfile)
+  }
 }
 

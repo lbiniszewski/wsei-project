@@ -52,11 +52,7 @@ export class DataBaseService {
   public loggedUserKey:string = window.localStorage.getItem('loggedUserId')
   public searchBtnClick= new Subject<any>();
   private userData = new Subject<User>();
-  // private userOpinionData = new Subject<[Opinion]>();
-  private userDataWhichGaveOpinion = new Subject<User>();
-  public userOpinionKey = '';
   public buttonClickTrack = new Subject<any>();
-  public opinionDataToSend = new Subject<any>();
   public arrayOfUserOpinion = new Subject<any>();
   public arrayOfThematicalModules = new Subject<any>();
   
@@ -74,34 +70,6 @@ export class DataBaseService {
         })
       })
   }
-  getUserDataWhichGaveOpinion(key: string) {
-    this.database
-      .collection('users')
-      .doc(key).get().toPromise().then(doc => {
-        this.userDataWhichGaveOpinion.next({
-          $key: doc.id,
-          name: doc.data().userName,
-          surname: doc.data().surname,
-          aboutMe: doc.data().aboutMe,
-          photo: doc.data().userPhoto
-        })
-        
-      })
-  }
-  // getUserOpinionData(userkey: string) {
-  //   this.database.collection('users')
-  //     .doc(userkey)
-  //     .collection('opinionAboutUser')
-  //     .doc('SRImNX5L3DTktcOvPoe8F0vSpQl1')
-  //     .get().toPromise().then(doc => {
-  //       this.userOpinionData.next([{
-  //         $opinionKey: doc.id,
-  //         opinionAboutUser: doc.data().opinion
-  //       }])
-  //       // this.userOpinionKey = doc.id
-  //     })
-
-  // }
   arrayOfUserWhichGaveOpinion(key:any) {
     let opinionRef =  this.database.collection('users').doc(key).collection('opinionAboutUser');
     let userRef = this.database.collection('users');
@@ -147,9 +115,6 @@ export class DataBaseService {
   }
   sendUserData(): Observable<any> {
     return this.userData.asObservable();
-  }
-  sendUserWhichGaveOpinion(): Observable<any> {
-    return this.userDataWhichGaveOpinion.asObservable();
   }
   sendUserArray(): Observable<any[]> {
 

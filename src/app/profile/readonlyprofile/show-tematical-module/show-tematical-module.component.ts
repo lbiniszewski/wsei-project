@@ -13,7 +13,6 @@ export class ShowTematicalModuleComponent implements OnInit,AfterContentChecked 
   constructor(private dbService: DataBaseService) {
     this.dbService.sendThematicalModuleArray().subscribe(data=>{
       this.thematicalModulesArray = data
-      
     })
     this.dbService.buttonClickTrack.subscribe(event => {
      this.clicked = event
@@ -34,10 +33,7 @@ export class ShowTematicalModuleComponent implements OnInit,AfterContentChecked 
     
     });}
     sendTextAreasValueToDB(){
-      
-      
       for(let i=0; i<this.thematicalModulesArray.length;i++){
-        
       this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('thematicalModule')
       .doc(this.thematicalModulesArray[i].topicTitle)
       .update({
