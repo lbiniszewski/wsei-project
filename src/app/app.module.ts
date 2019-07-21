@@ -36,6 +36,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import * as rxjs from 'rxjs';
 import { HttpClientModule } from "@angular/common/http";
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { RegisterComponent } from './auth/login/register/register.component';
 
 
 const firebaseConfig = {
@@ -75,7 +76,8 @@ const firebaseConfig = {
     EditProfileEngineComponent,
     TextFieldComponent,
     AddButtonComponent,
-    CancleButtonComponent
+    CancleButtonComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule, 

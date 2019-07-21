@@ -8,6 +8,7 @@ import { FriendDetailComponent } from './friends/friend-detail/friend-detail.com
 import { FriendsListComponent } from './friends/friends-list/friends-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { RegisterComponent } from './auth/login/register/register.component';
 
 const appRoutes: Routes = [
   {
@@ -40,6 +41,10 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: '**',

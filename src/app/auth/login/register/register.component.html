@@ -1,0 +1,41 @@
+
+<form (ngSubmit)="signup(formData)" #formData = "ngForm">
+    <div class="container">
+      <div class="input-group mb-3 mt-3">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        <!--<label>E-mail</label>-->
+        <input ngModel [hidden]="showField" class="form-control p-3" type="email" name="email" placeholder="Email" required>
+      </div>
+      <div class="input-group mb-3 mt-3"> 
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <!--<label>Hasło</label>-->
+        <input ngModel [hidden]="showField" class="form-control p-3" type="password" name="password" placeholder="Hasło" required>
+      </div>
+      <!-- Definiowanie dodatkowych pol do przeslania przy rejestracji -->
+      <div class="input-group mb-3 mt-3" [hidden]="!showField"> 
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <!--<label>Hasło</label>-->
+        <input ngModel class="form-control p-3" minlength="4" maxlength="20" type="text" name="userName" placeholder="Imię">
+      </div>
+      <div class="input-group mb-3 mt-3" [hidden]="!showField"> 
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <!--<label>Hasło</label>-->
+        <input ngModel class="form-control p-3" minlength="4" maxlength="20" type="text" name="surname" placeholder="Nazwisko">
+      </div>
+      <div class="input-group mb-3 mt-3" [hidden]="!showField"> 
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <!--<label>Hasło</label>-->
+        <input ngModel class="form-control p-3" minlength="4" type="text" name="aboutMe" placeholder="Opis o mnie">
+      </div>
+      <div class="input-group mb-3 mt-3" [hidden]="!showField"> 
+        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+        <!--<label>Hasło</label>-->
+        <input ngModel class="form-control p-3" minlength="4" type="text" name="userPhoto" placeholder="Fotografia użytkownika">
+      </div>
+
+      <div class="btn-group btn-group-lg">
+        <button type="submit" class="btn btn-info mr-3" [hidden]="showField" [disabled] = "formData.invalid">Register</button>
+        <button type="button" class="btn btn-info" [hidden]="!showField" [disabled] = "formData.invalid" (click)="addData(formData)">Dodaj</button>
+      </div>
+    </div>
+    </form>
