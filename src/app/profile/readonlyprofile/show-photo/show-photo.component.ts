@@ -1,15 +1,18 @@
-import { Component, OnInit, AfterContentChecked, ɵConsole } from '@angular/core';
+
+
+import { Component, OnInit, AfterContentChecked} from '@angular/core';
 import { DataBaseService } from 'src/app/data-base.service';
-import { User } from 'src/app/user.model'
+
 import { Subscription } from 'rxjs';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { ImageCropperComponent } from 'ngx-image-cropper';
+
 @Component({
   selector: 'app-show-photo',
   templateUrl: './show-photo.component.html',
   styleUrls: ['./show-photo.component.scss']
 })
+
 export class ShowPhotoComponent implements OnInit, AfterContentChecked {
   userData: any = {};
   subscription: Subscription;
@@ -23,20 +26,21 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   getImgCropper:any;
+  loggedUserKey:any;
   constructor(private dbService: DataBaseService,
     private sanitizer: DomSanitizer
   ) {
     this.subscription = this.dbService.sendUserData().subscribe(data => {
       this.userData = data
       this.makeSafeUrl()
-      console.log(this.safeImage)
-      console.log(this.userData)
+      
     })
     this.dbService.buttonClickTrack.subscribe(event => {
       this.clicked = event
-      console.log(this.clicked)
+      
       this.writingInTextArea()
     })
+    
   }
   makeSafeUrl() {
     this.safeImage = this.sanitizer.bypassSecurityTrustResourceUrl(this.userData.photo);
@@ -51,22 +55,22 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
       this.updateDataBase();
       this.getPhotoAddBtn.style.display = "none";
       this.getTextArea.setAttribute("readonly", "");
-      console.log(this.base64textString)
+      
 
     }
   }
   updateDataBase() {
-    console.log(this.getTextArea.value)
+    
     if (this.userData.photo == "" || this.userData.photo != this.base64textString.toString() && this.base64textString.toString() != "") {
       this.dbService.database.collection('users')
-        .doc('oZbVhmP51LWibJ9qgbGcGugIBSX2').update({
+        .doc(this.dbService.loggedUserKey).update({
           
           userPhoto: this.base64textString.toString()
         })
     }
 
     this.dbService.database.collection('users')
-      .doc('oZbVhmP51LWibJ9qgbGcGugIBSX2').update({
+      .doc(this.dbService.loggedUserKey).update({
         aboutMe: this.getTextArea.value,
 
       })
@@ -81,7 +85,7 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
       reader.onload = this.handleReaderLoaded.bind(this);
       reader.readAsBinaryString(file);
     }
-    console.log(this.base64textString)
+  
     this.imageChangedEvent = evt;
   }
 
@@ -91,27 +95,22 @@ export class ShowPhotoComponent implements OnInit, AfterContentChecked {
 imageCropped(event: ImageCroppedEvent) {
   this.croppedImage = event.base64;
   this.base64textString = this.croppedImage
-  console.log(event);
-  console.log(typeof this.croppedImage)
-  console.log(typeof this.base64textString)
 }
 imageLoaded() {
   this.getImgCropper = document.querySelector('.imgCropperPopUp')
   this.getImgCropper.style.display="block"
-   console.log('Image loaded')
+   
 }
 cropperReady() {
   
-  console.log('Cropper ready')
+  
   
 }
 loadImageFailed () {
-  console.log('Load failed');
+
 }
 savePhoto(){
   this.getImgCropper.style.display = "none"
-  console.log(this.croppedImage)
-  console.log(this.base64textString)
 }
   ngOnInit() {
   }

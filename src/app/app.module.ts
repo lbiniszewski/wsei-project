@@ -8,14 +8,17 @@ import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app.routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DataBaseService } from './data-base.service';
-import { FriendDetailComponent } from './friends/friend-detail/friend-detail.component';
-import { FriendsListComponent } from './friends/friends-list/friends-list.component';
+
 import { TemplateDrivenFormComponent } from './about/template-driven-form/template-driven-form.component';
 import { ReactiveFormComponent } from './about/reactive-form/reactive-form.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthService } from './auth/auth.service';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+
 import { NavbarModule, WavesModule, ButtonsModule, InputsModule } from 'angular-bootstrap-md';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -32,11 +35,14 @@ import { TextFieldComponent } from './profile/edit-profile/text-field/text-field
 import { AddButtonComponent } from './profile/edit-profile/add-button/add-button.component';
 import { CancleButtonComponent } from './profile/edit-profile/cancle-button/cancle-button.component';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import * as rxjs from 'rxjs';
 import { HttpClientModule } from "@angular/common/http";
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { RegisterComponent } from './auth/login/register/register.component';
+
+
+
 
 
 const firebaseConfig = {
@@ -60,8 +66,6 @@ const firebaseConfig = {
     FriendsComponent,
     AboutComponent,
     PageNotFoundComponent,
-    FriendDetailComponent,
-    FriendsListComponent,
     TemplateDrivenFormComponent,
     ReactiveFormComponent,
     LoginComponent,
@@ -86,6 +90,8 @@ const firebaseConfig = {
     ReactiveFormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
     NavbarModule,
     WavesModule,
     ButtonsModule,
@@ -96,7 +102,10 @@ const firebaseConfig = {
     ImageCropperModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [DataBaseService, AuthService],
+  providers: [DataBaseService, AuthService,ReadonlyprofileComponent],
   bootstrap: [AppComponent]
 })
+
+
+
 export class AppModule {}

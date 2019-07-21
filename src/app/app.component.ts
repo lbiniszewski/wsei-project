@@ -9,15 +9,18 @@ import { AppSearchComponent } from 'src/app/search/app-search.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  
 
-  constructor(private authService: AuthService, private router:Router){
+  
+  constructor(public authService: AuthService, private router:Router){
 
   }
 
+  
 
   logout(){
     this.authService.logout();
-    this.router.navigate(['/home'])
+    this.router.navigate(['/login'])
   }
 
 }

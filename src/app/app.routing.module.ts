@@ -4,8 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { FriendsComponent } from './friends/friends.component';
 import { AboutComponent } from './about/about.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { FriendDetailComponent } from './friends/friend-detail/friend-detail.component';
-import { FriendsListComponent } from './friends/friends-list/friends-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { RegisterComponent } from './auth/login/register/register.component';
@@ -23,16 +21,6 @@ const appRoutes: Routes = [
   {
     path: 'friends',
     component: FriendsComponent,
-    children: [
-      {
-        path: '', // www.example.pl/friends/
-        component: FriendsListComponent
-      },
-      {
-        path: ':id', // www.example.pl/friends/1
-        component: FriendDetailComponent
-      }
-    ]
   },
   {
     path: 'about',
@@ -41,6 +29,11 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  //dodanie sciezki do routingu, podstrona jaka bedzie sie wczytywala jak klikniemy guzik edit
+  {
+    path: 'profile/edit-profile',
+    component: EditProfileComponent
   },
   {
     path: 'register',

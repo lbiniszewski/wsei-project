@@ -8,64 +8,71 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
   styleUrls: ['./show-opinion.component.scss']
 })
 export class ShowOpinionComponent implements OnInit,AfterContentChecked {
-  
-  opinionData: any = {};
-  userOpinionData: any = {};
-  getAddOpinionBtn:any;
+  actualUserKey:any;
+  getContainerOpinionBtn:any;
   textAreaOpinionValue:any;
   safeImage:any;
-  userArray:any = [];
+  userOpinionArray:any = [];
+  searchBtnClick:boolean;
+  getAddBtn:any;
   constructor(private dbService: DataBaseService,
     private sanitizer:DomSanitizer) {
-    this.subOpinionData();
-    // this.subUserOpinionName();
     this.subUserArray();
     
-  }
-
-  subOpinionData() {
-    this.dbService.sendUserOpinionData().subscribe(data => {
-      this.opinionData = data
+    this.dbService.searchBtnClick.subscribe(data=>{
+      this.searchBtnClick = data
+     
+    })
+    this.dbService.actualUserKey.subscribe(data=>{
+      this.actualUserKey = data
+     
+      this.showAddBtn();
     })
   }
-  // subUserOpinionName() {
-  //   this.dbService.sendUserWhichGaveOpinion().subscribe(data => {
-  //     this.userOpinionData = data;
-      
-  //     this.makeSafeUrl();
-  //     console.log(this.userOpinionData);
-  //   })
-  // }
+  showAddBtn(){
+    if(this.searchBtnClick==true){
+      this.dbService.database.collection('users').doc(this.dbService.loggedUserKey)
+      .collection('friends').doc(this.actualUserKey).get().toPromise().then(snapshot=>{
+        
+        if(snapshot.exists){
+          this.getAddBtn.style.display = 'block'
+        }
+      }
+      )
+    }
+  }
+  
+   
   subUserArray(){
     this.dbService.sendUserArray().subscribe(data=>{
-      this.userArray = data;
-      console.log(this.userArray);
-      console.log(data)
+      this.userOpinionArray = data;
+      this.makeSafeUrl();
     })
   }
   addNewOpinion(){
-    this.getAddOpinionBtn.style.display = 'block'
+    this.getContainerOpinionBtn.style.display = 'block'
   }
   sendDataToDataBase(){
-    console.log(this.textAreaOpinionValue)
+    
     this.dbService.database.collection('users')
-      .doc(this.dbService.actualUserKey)
+      .doc(this.actualUserKey)
       .collection('opinionAboutUser')
-      .doc('TCte0YgH4576lvFVvHfP').set({
+      .doc(this.dbService.loggedUserKey).set({
         opinion:this.textAreaOpinionValue.value
       })
-      this.getAddOpinionBtn.style.display = 'none'
+      this.getContainerOpinionBtn.style.display = 'none'
   }
   makeSafeUrl() {
-    this.safeImage = this.sanitizer.bypassSecurityTrustResourceUrl(this.userOpinionData.photo);
-    console.log(this.safeImage)
+    this.safeImage = this.sanitizer.bypassSecurityTrustResourceUrl(this.userOpinionArray.photo);
+   
   } 
   ngOnInit() {
     
   }
   ngAfterContentChecked(){
-    this.getAddOpinionBtn = document.querySelector('.addNewOpinionPopUp')
+    this.getContainerOpinionBtn = document.querySelector('.addNewOpinionPopUp')
     this.textAreaOpinionValue = document.querySelector('.textAreaOpinionValue')
+    this.getAddBtn = document.querySelector('.addOpinionBtn')
   }
   
 

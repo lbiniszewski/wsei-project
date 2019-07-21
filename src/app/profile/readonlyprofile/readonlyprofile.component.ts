@@ -7,6 +7,7 @@ import { ShowProfileEngineComponent } from './show-profile-engine/show-profile-e
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { UserComponent } from '../user.component';
+import { DataBaseService } from 'src/app/data-base.service';
 
 @Component({
   selector: 'app-readonlyprofile',
@@ -32,10 +33,40 @@ import { UserComponent } from '../user.component';
   ],
 })
 export class ReadonlyprofileComponent implements OnInit {
-
-  constructor() { }
-  
-  ngOnInit() {
+  actualUserKey:any;
+  btnClicked:boolean=false;
+  constructor(private dbService:DataBaseService) { 
+    this.dbService.searchBtnClick.subscribe(data=>{
+      this.btnClicked = data
+     
+    })
+    this.dbService.actualUserKey.subscribe(data=>{
+      this.actualUserKey = data
+     
+    })
   }
-
+  ngOnInit() {
+    if(this.btnClicked===false){
+      
+      this.showActualUser()
+    }else if(this.btnClicked===true){
+      
+      this.showAnotherUser()
+      
+    }
+    
+  }
+  showActualUser(){
+    this.dbService.getUserData(this.dbService.loggedUserKey);
+      this.dbService.getArrayOfThematicalModule(this.dbService.loggedUserKey);
+      this.dbService.arrayOfUserWhichGaveOpinion(this.dbService.loggedUserKey)
+  }
+  showAnotherUser(){
+    this.dbService.getUserData(this.actualUserKey);
+      this.dbService.getArrayOfThematicalModule(this.actualUserKey);
+      this.dbService.arrayOfUserWhichGaveOpinion(this.actualUserKey);
+      
+  }
+ 
 }
+  
