@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from 'firebase';
 import { Router } from '@angular/router';
+import { DataBaseService } from '../data-base.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,8 @@ import { Router } from '@angular/router';
 
 
 export class AuthService {
-
-
   user: User; //jest to token, użytkownik który jest zawracany po zalogowaniu
-  constructor(private angularFire: AngularFireAuth, private router: Router) { 
+  constructor(private angularFire: AngularFireAuth, private router: Router,private dbService:DataBaseService) { 
     //metoda sprawdzająca użytkownika, będzie informowała czy użytkownik jest zalogowany czy nie jest
     // metoda zwraca observable którym jest użytkownik albo null
     //jeżeli pojawi się użytkownik to poprzez ta metode zo zmiennej user zostanie dopisany użytkownik
@@ -24,12 +23,11 @@ export class AuthService {
      
     });
   }
-  
   login(email: string, password: string){
     this.angularFire.auth.signInWithEmailAndPassword(email, password)
     .then(user=>{
       window.localStorage.setItem('loggedUserId',user.user.uid);//getting user key (adam)
-        this.router.navigate(['/home']);    
+        this.router.navigate(['/home']);   
 }).catch(err=>{
       console.log(err);
     });

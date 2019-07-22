@@ -1,0 +1,11 @@
+<div class="friendsContainer">
+  <div *ngFor="let user of userMatchArray" class="friend">
+    <a (click)=showUserProfile(user.key) [routerLink]="['readOnProf', user.key]">
+    <div>
+          <img [src]=user.photo>
+          <h3>{{user.name}} {{user.surname}}</h3>
+      </div>
+      </a>
+  </div>
+</div>
+<router-outlet></router-outlet>

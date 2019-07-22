@@ -1,7 +1,7 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { DataBaseService } from 'src/app/data-base.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 
@@ -31,8 +31,9 @@ export class ShowNameComponent implements OnInit {
   surnameValue: any;
   searchBtnClick: boolean;
   loggedUserKey= window.localStorage.getItem('loggedUserId')
+  id:any =this.activatedRoutes.snapshot.params['id'];
   //dodalem do konstruktora routing w celu uzycia go w funkcji editProfile
-  constructor(private router: Router, private dbService: DataBaseService) {
+  constructor(private router: Router, private dbService: DataBaseService,private activatedRoutes:ActivatedRoute) {
     this.subscription = this.dbService.sendUserData().subscribe(data => {
       this.data = data
     })
@@ -41,20 +42,20 @@ export class ShowNameComponent implements OnInit {
     })
     this.dbService.actualUserKey.subscribe(data => {
       this.actualUserKey = data
-      this.searchBtnClicked()
+       this.searchBtnClicked()
     })
 
   }
-  searchBtnClicked() {
-    this.editBtn = document.querySelector('#editBtn')
-    this.addToFriendBtn = document.querySelector('#addToFriendBtn')
-    this.editBtn.style.display = 'none'
-    if (this.searchBtnClick == true) {
+  searchBtnClicked() {  
+    if (this.actualUserKey != this.dbService.loggedUserKey) {
       this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(this.actualUserKey).get().toPromise().then(snapshot => {
-        if(snapshot.exists &&snapshot.id === this.actualUserKey) {
+        this.editBtn = document.querySelector('#editAddBtn')
+        this.addToFriendBtn = document.querySelector('#addToFriendBtn')
+        if(snapshot.exists &&snapshot.id == this.actualUserKey) {
+          this.editBtn.style.display = 'none'
           this.addToFriendBtn.style.display = 'block'
           this.addToFriendBtn.innerHTML = 'Usuń znajomego'
-        }else if(!snapshot.exists){
+        }else {
           this.addToFriendBtn.style.display = 'block'
           this.addToFriendBtn.innerHTML = 'Dodaj do znajomych'
 
@@ -68,15 +69,16 @@ export class ShowNameComponent implements OnInit {
   }
   addToFriends() {
     let data = {}
+    this.addToFriendBtn = document.querySelector('#addToFriendBtn')
     if (this.addToFriendBtn.innerHTML == 'Dodaj do znajomych') {
-      this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(this.actualUserKey).set(data)
+      this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(this.id).set(data)
     } else if (this.addToFriendBtn.innerHTML == 'Usuń znajomego') {
-      this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(this.actualUserKey).delete()
+      this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(this.id).delete()
     }
   }
   editBtnClicked() {
     this.dbService.buttonClickTrack.next(this.click)
-    this.editBtn = document.querySelector('#editBtn')
+    this.editBtn = document.querySelector('#editAddBtn')
     this.userNameParagraph = document.querySelector('.nameSurnameParagraph')
     this.editUserNameParagraph = document.querySelector('.editNameAndSurname')
     if (this.click === true && this.editBtn.innerHTML == "Edytuj") {
@@ -107,8 +109,9 @@ export class ShowNameComponent implements OnInit {
   ngOnInit() {
   }
   //Zadaniem funkcji jest przekierowanie do komponentu zajmujacego sie edycja profilu
-  editProfile() {
-    this.router.navigate(['/profile/edit-profile'])
+  ngAfterContentChecked(){
+    this.editBtn = document.querySelector('#editAddBtn')
+    this.addToFriendBtn = document.querySelector('#addToFriendBtn')
   }
 
 

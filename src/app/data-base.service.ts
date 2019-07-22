@@ -55,7 +55,7 @@ export class DataBaseService {
   public buttonClickTrack = new Subject<any>();
   public arrayOfUserOpinion = new Subject<any>();
   public arrayOfThematicalModules = new Subject<any>();
-  
+  public searchInputValue= new Subject<any>();
   
   getUserData(key: string) {
     this.database

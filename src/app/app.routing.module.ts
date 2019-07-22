@@ -7,6 +7,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LoginComponent } from './auth/login/login.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { RegisterComponent } from './auth/login/register/register.component';
+import { SearchResultsComponent } from './search/search-results/search-results.component';
+import { ReadonlyprofileComponent } from './profile/readonlyprofile/readonlyprofile.component';
 
 const appRoutes: Routes = [
   {
@@ -29,6 +31,18 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'search',
+    component: SearchResultsComponent
+  },
+  {
+    path:'search/readOnProf/:id',
+    component:ReadonlyprofileComponent
+  },
+  {
+    path:'friends/readOnProf/:id',
+    component:ReadonlyprofileComponent
   },
   //dodanie sciezki do routingu, podstrona jaka bedzie sie wczytywala jak klikniemy guzik edit
   {

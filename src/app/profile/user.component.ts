@@ -1,5 +1,4 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import { ReadonlyprofileComponent } from './readonlyprofile/readonlyprofile.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 @Component({
@@ -10,12 +9,10 @@ import { FormsModule } from '@angular/forms';
 })
 @NgModule({
   declarations: [
-    ReadonlyprofileComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReadonlyprofileComponent
   ],
   providers: [],
   exports:[

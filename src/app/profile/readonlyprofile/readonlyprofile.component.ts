@@ -8,6 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { UserComponent } from '../user.component';
 import { DataBaseService } from 'src/app/data-base.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-readonlyprofile',
@@ -26,42 +27,44 @@ import { DataBaseService } from 'src/app/data-base.service';
   imports: [
     BrowserModule,
     FormsModule,
-    
+    DataBaseService
   ],
   exports: [
     ReadonlyprofileComponent
   ],
 })
 export class ReadonlyprofileComponent implements OnInit {
-  actualUserKey:any;
-  btnClicked:boolean=false;
-  loggedUserKey= window.localStorage.getItem('loggedUserId')
-  constructor(private dbService:DataBaseService) { 
-    this.dbService.searchBtnClick.subscribe(data=>{
-      this.btnClicked = data
-     
-    })
-    this.dbService.actualUserKey.subscribe(data=>{
+  actualUserKey: any;
+  loggedUserKey = window.localStorage.getItem('loggedUserId')
+  searchBtnClicked:any=false;
+  id:any =this.activatedRoutes.snapshot.params['id'];
+  constructor(private dbService: DataBaseService,
+    private router:Router,
+    private activatedRoutes:ActivatedRoute) {
+    this.dbService.actualUserKey.subscribe(data => {
       this.actualUserKey = data
+    })
+    this.dbService.searchBtnClick.subscribe(data=>{
+      this.searchBtnClicked = data
+      
     })
   }
   ngOnInit() {
-    if(this.btnClicked===false){
-        this.showLoggedUser()           
-    }else if(this.btnClicked===true){
-      this.showAnotherUser()  
+    if(this.id=== null|| this.id=== undefined) {
+      this.showLoggedUser()
+      this.searchBtnClicked = true;
+    }else if(this.id !== null&&this.id !== undefined){
+      this.showAnotherUser();
     }
-    
   }
-  showLoggedUser(){
+  showLoggedUser() {
     this.dbService.getUserData(this.loggedUserKey);
     this.dbService.arrayOfUserWhichGaveOpinion(this.loggedUserKey)
-    this.dbService.getArrayOfThematicalModule(this.loggedUserKey);
+    this.dbService.getArrayOfThematicalModule(this.loggedUserKey); 
   }
-  showAnotherUser(){
-    this.dbService.getUserData(this.actualUserKey);
-      this.dbService.getArrayOfThematicalModule(this.actualUserKey);
-      this.dbService.arrayOfUserWhichGaveOpinion(this.actualUserKey); 
+  showAnotherUser() {
+    this.dbService.getUserData(this.id);
+    this.dbService.getArrayOfThematicalModule(this.id);
+    this.dbService.arrayOfUserWhichGaveOpinion(this.id);
   }
 }
-  

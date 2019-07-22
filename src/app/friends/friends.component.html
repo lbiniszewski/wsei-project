@@ -1,10 +1,12 @@
 <div class="friendsContainer">
     <h1>Twoi znajomi :</h1>
     <div *ngFor="let friend of arrayOfFriends" class="friend">
+        <a (click)=showUserProfile(friend.key) [routerLink]="['readOnProf', friend.key]">
         <div>
             <img [src]=friend.photo>
             <h3>{{friend.name}} {{friend.surname}}</h3>
         </div>
+        </a>
         <button type="button" class="btn btn-primary btn-sm removeFriend" (click)="removeFriend(friend.key)">Usuń znajomego</button>
     </div>
 </div>

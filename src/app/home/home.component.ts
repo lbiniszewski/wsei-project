@@ -12,21 +12,15 @@ import * as firebase from 'firebase';
 export class HomeComponent implements OnInit {
 
 
-  myprofile=false;
   friend: Friend;
   userLogged:boolean
-  btnClicked:boolean=false;
   constructor(private dbService: DataBaseService, private router: Router, public authService: AuthService) {
-    this.dbService.searchBtnClick.subscribe(data=>{
-      this.btnClicked = data
-     
-    })
+    
    }
   ngOnInit() {
     this.friend = this.dbService.getRandomFriend();
     this.isUserLogged()
-
-    this.dbService.searchBtnClick.next(this.btnClicked)
+    
   }
   isUserLogged()//sprawdzenie czy użytkownik jest zalogowany jeśli tak to pokaż profil
   {
@@ -38,9 +32,6 @@ export class HomeComponent implements OnInit {
   }
   getFriend() {
     this.router.navigate(['/friends', this.friend.id]);
-  }
-  myProfile(){
-    this.dbService.searchBtnClick.next(this.myProfile)
   }
 }
 

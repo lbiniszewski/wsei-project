@@ -17,6 +17,22 @@
     
 
 }
+.editAddBtn{
+    max-width:15%;
+
+    margin: 3% 3%  3% 5%;
+    // .editBtnParagraph{
+    //     @include responsive-font-size(12px);
+    // }
+    position: absolute;
+    z-index: 200;
+    
+    
+    right: 0;
+    
+    
+    
+}
 .editBtn{
     max-width:15%;
 

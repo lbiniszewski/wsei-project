@@ -40,6 +40,7 @@ import * as rxjs from 'rxjs';
 import { HttpClientModule } from "@angular/common/http";
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { RegisterComponent } from './auth/login/register/register.component';
+import { SearchResultsComponent } from './search/search-results/search-results.component';
 
 
 
@@ -81,7 +82,8 @@ const firebaseConfig = {
     TextFieldComponent,
     AddButtonComponent,
     CancleButtonComponent,
-    RegisterComponent
+    RegisterComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule, 

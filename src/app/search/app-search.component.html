@@ -1,11 +1,4 @@
 <div>
     <input class="searchInput" type="search" placeholder="Wyszukaj użytkownika">
-    <input class="btn btn-primary" type="submit" value="Szukaj" (click)="getUser()">
+    <input class="btn btn-primary" type="submit" value="Szukaj" routerLink="/search" (click)="getUser()">
 </div>
-
-  <!-- <div class="md-form">
-      <input type="search" [(ngModel)]="searchText" placeholder="Wyszukaj uzytkownika">
-    </div>
-    <ul *ngFor="let data of dataset | filter: searchText">
-      <li>{{data}}</li>
-    </ul> -->
