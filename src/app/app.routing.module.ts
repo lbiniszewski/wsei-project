@@ -37,6 +37,10 @@ const appRoutes: Routes = [
     component: SearchResultsComponent
   },
   {
+    path:'home/readOnProf/:id',
+    component:ReadonlyprofileComponent,
+  },
+  {
     path:'search/readOnProf/:id',
     component:ReadonlyprofileComponent
   },
@@ -61,7 +65,7 @@ const appRoutes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes,{onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

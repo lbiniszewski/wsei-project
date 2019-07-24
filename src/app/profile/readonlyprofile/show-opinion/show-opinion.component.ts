@@ -2,7 +2,7 @@ import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { DataBaseService } from 'src/app/data-base.service';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-show-opinion',
   templateUrl: './show-opinion.component.html',
@@ -17,9 +17,11 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
   searchBtnClick:boolean;
   getAddBtn:any;
   id:any =this.activatedRoutes.snapshot.params['id'];
+  click:boolean = true;
   constructor(private dbService: DataBaseService,
     private sanitizer:DomSanitizer,
-    private activatedRoutes:ActivatedRoute) {
+    private activatedRoutes:ActivatedRoute,
+    private router:Router) {
     this.subUserArray();
     this.dbService.searchBtnClick.subscribe(data=>{
       this.searchBtnClick = data
@@ -27,7 +29,6 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
     })
     this.dbService.actualUserKey.subscribe(data=>{
       this.actualUserKey = data
-     
     })
   }
   showAddBtn(){
@@ -37,13 +38,22 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
         this.getAddBtn = document.querySelector('.addOpinionBtn')
         if(snapshot.exists){
           this.getAddBtn.style.display = 'block'
+        }else{
+          this.getAddBtn.style.display = 'none'
         }
       }
       )
     }
   }
-  
-   
+  routeToUser(key:any){
+    
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>{
+      this.actualUserKey = key
+      this.dbService.actualUserKey.next(this.actualUserKey)
+       this.dbService.searchBtnClick.next(this.click)
+    this.router.navigateByUrl(`/home/readOnProf/${key}`)
+    });
+  }
   subUserArray(){
     this.dbService.sendUserArray().subscribe(data=>{
       this.userOpinionArray = data;
@@ -62,9 +72,7 @@ export class ShowOpinionComponent implements OnInit,AfterContentChecked {
         opinion:this.textAreaOpinionValue.value
       })
       this.getContainerOpinionBtn.style.display = 'none'
-      this.dbService.getUserData(this.id);
       this.dbService.arrayOfUserWhichGaveOpinion(this.id);
-      this.dbService.getArrayOfThematicalModule(this.id);
   }
   makeSafeUrl() {
     this.safeImage = this.sanitizer.bypassSecurityTrustResourceUrl(this.userOpinionArray.photo);

@@ -54,10 +54,11 @@ export class ShowNameComponent implements OnInit {
         if(snapshot.exists &&snapshot.id == this.actualUserKey) {
           this.editBtn.style.display = 'none'
           this.addToFriendBtn.style.display = 'block'
-          this.addToFriendBtn.innerHTML = 'Usuń znajomego'
+          this.addToFriendBtn.innerHTML = 'Usuń'
         }else {
+          this.editBtn.style.display = 'none'
           this.addToFriendBtn.style.display = 'block'
-          this.addToFriendBtn.innerHTML = 'Dodaj do znajomych'
+          this.addToFriendBtn.innerHTML = 'Dodaj'
 
         }
       })
@@ -70,18 +71,29 @@ export class ShowNameComponent implements OnInit {
   addToFriends() {
     let data = {}
     this.addToFriendBtn = document.querySelector('#addToFriendBtn')
-    if (this.addToFriendBtn.innerHTML == 'Dodaj do znajomych') {
+    if (this.addToFriendBtn.innerHTML == 'Dodaj') {
       this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(this.id).set(data)
-    } else if (this.addToFriendBtn.innerHTML == 'Usuń znajomego') {
+      this.addToFriendBtn.innerHTML = 'Usuń'
+      this.dbService.actualUserKey.next(this.id)
+       this.dbService.searchBtnClick.next(this.click)
+    } else if (this.addToFriendBtn.innerHTML == 'Usuń') {
       this.dbService.database.collection('users').doc(this.dbService.loggedUserKey).collection('friends').doc(this.id).delete()
+      this.addToFriendBtn.innerHTML = 'Dodaj'
+      this.dbService.actualUserKey.next(this.id)
+       this.dbService.searchBtnClick.next(this.click)
     }
+
   }
   editBtnClicked() {
     this.dbService.buttonClickTrack.next(this.click)
     this.editBtn = document.querySelector('#editAddBtn')
     this.userNameParagraph = document.querySelector('.nameSurnameParagraph')
     this.editUserNameParagraph = document.querySelector('.editNameAndSurname')
+    this.nameValue = document.querySelector('.imie')
+    this.surnameValue = document.querySelector('.nazwisko')
     if (this.click === true && this.editBtn.innerHTML == "Edytuj") {
+      this.nameValue.value = this.data.name
+    this.surnameValue.value = this.data.surname
       this.editBtn.innerHTML = 'Zapisz'
       this.click = false;
       this.userNameParagraph.style.display = "none"
@@ -108,7 +120,6 @@ export class ShowNameComponent implements OnInit {
   }
   ngOnInit() {
   }
-  //Zadaniem funkcji jest przekierowanie do komponentu zajmujacego sie edycja profilu
   ngAfterContentChecked(){
     this.editBtn = document.querySelector('#editAddBtn')
     this.addToFriendBtn = document.querySelector('#addToFriendBtn')
