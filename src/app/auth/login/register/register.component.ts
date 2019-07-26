@@ -45,13 +45,18 @@ export class RegisterComponent implements OnInit {
     
     
     let oneUser = db.collection('users').doc(`${path}`)
-     
+    window.localStorage.setItem('loggedUserId',path);//odzytanie klucz uzytkownika przy rejsteracjiw celu wyświetlenia jego profilu
     oneUser.set({
       aboutMe: formData.value.aboutMe,
       surname: formData.value.surname,
       userName: formData.value.userName,
       userPhoto: formData.value.userPhoto
     })
+    //stworzenie ścieżek dostępu dla wyświtlania innego modułu
+    oneUser.collection('thematicalModule').doc('Film').set({desc:''})
+    oneUser.collection('thematicalModule').doc('Hobby').set({desc:''})
+    oneUser.collection('thematicalModule').doc('Muzyka').set({desc:''})
+    oneUser.collection('thematicalModule').doc('Sport').set({desc:''})
     .then(function(){
       console.log("Document is added to data base");
     })
