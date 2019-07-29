@@ -134,6 +134,18 @@ a{
   }
 }
 @media all and (max-width: 405px) {
+  .searchDiv{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .searchBtn{
+      box-sizing: content-box;
+      padding:5px;
+      height: 20px;
+      margin-left:0;
+      margin-right:0;
+    }
+  }
     .allComponentsContainer {
         width: 98%;
         display: flex;
@@ -224,6 +236,18 @@ a{
       }
     }
 @media all and (min-width: 405px) and (max-width: 426px) {
+  .searchDiv{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .searchBtn{
+      box-sizing: content-box;
+      padding:5px;
+      height: 20px;
+      margin-left:0;
+      margin-right:0;
+    }
+  }
   .allComponentsContainer {
     width: 90%;
     display: flex;
@@ -314,6 +338,21 @@ a{
   }
 }
 @media all and (min-width: 426px) and (max-width: 487px) {
+  .searchDiv{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .searchInput{
+      height: 40px;
+    }
+    .searchBtn{
+      padding:5px;
+      height: 40px;
+      margin-top:0;
+      margin-left:10px;
+      margin-right:10px;
+    }
+  }
   .allComponentsContainer {
     width: 90%;
     display: flex;
@@ -405,6 +444,22 @@ a{
 }
 
 @media all and (min-width: 487px) and (max-width: 768px) {
+  .searchDiv{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .searchInput{
+      height: 40px;
+    }
+    .searchBtn{
+      padding:5px;
+      width:75px;
+      height: 40px;
+      margin-top:0;
+      margin-left:10px;
+      margin-right:10px;
+    }
+  }
   .allComponentsContainer {
     width: 90%;
     display: flex;
@@ -492,6 +547,22 @@ a{
   }
 }
 @media all and (min-width: 768px) and (max-width: 1024px) {
+  .searchDiv{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .searchInput{
+      height: 40px;
+    }
+    .searchBtn{
+      padding:5px;
+      width:75px;
+      height: 40px;
+      margin-top:0;
+      margin-left:10px;
+      margin-right:10px;
+    }
+  }
   .allComponentsContainer {
     width: 90%;
     display: flex;
@@ -580,6 +651,22 @@ a{
   }
 }
 @media all and (min-width: 1024px) {
+  .searchDiv{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .searchInput{
+      height: 40px;
+    }
+    .searchBtn{
+      padding:5px;
+      width:75px;
+      height: 40px;
+      margin-top:0;
+      margin-left:10px;
+      margin-right:10px;
+    }
+  }
   .allComponentsContainer {
     width: 95%;
     display: flex;

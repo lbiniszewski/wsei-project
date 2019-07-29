@@ -1,4 +1,3 @@
-
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark green justify-content-between" [containerInside]="false">
 
   <nav>
@@ -16,7 +15,7 @@
     <a class="navbar-brand" href="#">
       <img src="" height="40" alt="LOGO">
       WEB Porfolio
-  </a>
+    </a>
   </mdb-navbar-brand>
 
   <app-app-search></app-app-search>
@@ -25,17 +24,11 @@
 
     <div class="navbar-nav ml-auto">
       <a routerLink="/friends" routerLinkActive="active" class="nav-link waves-light" mdbWavesEffect>Znajomi</a>
-
-      <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>Moje konto<span class="caret"></span></a>
-        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-          <a (click)="myProfile()" routerLink="/home" routerLinkActive="active" class="dropdown-item waves-light" mdbWavesEffect>Mój profil</a>
-          <a (click)="logout()" class="dropdown-item waves-light" mdbWavesEffect>Wyloguj</a>
-        </div>
-      </li>
-
+      <a (click)="myProfile()" routerLink="/home" routerLinkActive="active" class="nav-link waves-light"
+        mdbWavesEffect>Mój profil</a>
+      <a (click)="logout()" class="nav-link waves-light" mdbWavesEffect>Wyloguj</a>
     </div>
-    
+
   </links>
 
 
